@@ -13,18 +13,6 @@ const HANDLES = [
   "Messaging Pipelines",
 ];
 
-const HANDLE_COLORS = [
-  "var(--flip-1)",
-  "var(--flip-2)",
-  "var(--flip-3)",
-  "var(--flip-4)",
-  "var(--flip-5)",
-  "var(--flip-6)",
-  "var(--flip-7)",
-  "var(--flip-8)",
-  "var(--flip-9)",
-];
-
 /** Rendered twice — under the paragraph on desktop, after the photo on
  * mobile (see the two call sites below) — since the two spots live in
  * separate flex/grid containers that a plain `order-*` utility can't
@@ -36,7 +24,7 @@ function ResumeButton({ visibility }: { visibility: string }) {
     <a
       href="/Oguike_Paschal_Chidera_Resume.pdf"
       download
-      className={`${visibility} w-fit items-center gap-3 border px-3.5 py-[7px] text-[11px] font-medium uppercase tracking-[0.12em] transition-opacity duration-300 hover:opacity-85`}
+      className={`${visibility} min-h-11 w-fit items-center gap-3 border px-3.5 text-ui leading-ui font-semibold uppercase tracking-ui transition-opacity duration-300 hover:opacity-85`}
       style={{ background: "var(--accent)", borderColor: "var(--accent)", color: "var(--paper)" }}
     >
       Download Résumé
@@ -57,16 +45,20 @@ export function Hero() {
           even, symmetrical pair; the text leads, the photo trails and lands
           lower, which is the asymmetry this layout is going for. */}
       <div className="flex flex-col gap-y-7 lg:col-start-6 lg:col-span-6 lg:row-start-1 lg:row-span-2 lg:self-start">
-        <p className="font-signature m-0 text-[13px] tracking-[0.08em]" style={{ color: "var(--body)" }}>
+        <p className="font-text m-0 text-lead leading-lead tracking-lead" style={{ color: "var(--body)" }}>
           Hi, my name is Paschal
         </p>
 
-        <h1 className="font-display m-0 text-center text-[clamp(40px,6.5vw,108px)] leading-[1.03] font-medium tracking-[-0.015em] text-balance lg:text-left">
-          I build web applications that handle <FlipWord words={HANDLES} colors={HANDLE_COLORS} /> end to end.
+        <h1 className="font-display m-0 text-center text-display leading-display font-extrabold uppercase tracking-display text-balance lg:text-left">
+          I build web applications that handle{" "}
+          <span className="italic">
+            <FlipWord words={HANDLES} />
+          </span>{" "}
+          end to end.
         </h1>
 
         <p
-          className="hidden lg:block text-[clamp(17px,1.4vw,20px)] leading-[1.6] text-pretty max-w-[46ch]"
+          className="font-text block text-lead leading-lead tracking-lead text-pretty max-w-[62ch]"
           style={{ color: "var(--body)" }}
         >
           I&apos;m a full-stack developer working across React, TypeScript, Node, and Postgres end to end, from
@@ -91,14 +83,14 @@ export function Hero() {
             fill
             priority
             sizes="(max-width: 1024px) 340px, 360px"
-            className="object-cover object-top"
+            className="object-cover object-top grayscale contrast-[1.08]"
           />
           <div
             className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
             style={{ background: "linear-gradient(to bottom, transparent, var(--paper))" }}
           />
         </div>
-        <div className="mt-2.5 text-[10px] uppercase tracking-[0.16em]" style={{ color: "var(--faint)" }}>
+        <div className="mt-2.5 text-caption leading-caption uppercase tracking-caption tabular-nums" style={{ color: "var(--muted)" }}>
           PO / 2026
         </div>
       </div>

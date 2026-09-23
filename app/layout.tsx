@@ -1,25 +1,27 @@
 import type { Metadata } from "next";
-import { Archivo, Bodoni_Moda, JetBrains_Mono } from "next/font/google";
+import { Archivo, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import Script from "next/script";
 import { CursorField } from "@/components/CursorField";
 import { Nav } from "@/components/Nav";
 import { ALL_SKILLS } from "@/lib/skills";
 import "./globals.css";
 
-const bodoniModa = Bodoni_Moda({
-  subsets: ["latin"],
-  // 700 is here for SectionLabel: Bodoni is a high-contrast Didone whose
-  // hairlines all but vanish at the small uppercase size those markers use,
-  // so they need a genuinely bold cut rather than 500.
-  weight: ["400", "500", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-});
-
+// Direction C: Archivo carries display and UI (condensed on its width axis
+// for display/brand text, upright for UI), Source Serif 4 carries reading
+// text. Both loaded with their full variable range (no fixed `weight`) so
+// the wdth/opsz axes below stay live instead of collapsing to static cuts.
 const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  axes: ["wdth"],
   variable: "--font-sans",
+});
+
+const sourceSerif4 = Source_Serif_4({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  variable: "--font-serif",
 });
 
 const jetBrainsMono = JetBrains_Mono({
@@ -52,7 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${bodoniModa.variable} ${archivo.variable} ${jetBrainsMono.variable}`}
+      className={`${archivo.variable} ${sourceSerif4.variable} ${jetBrainsMono.variable}`}
       // The beforeInteractive script below sets data-theme before hydration
       // to avoid a flash of the wrong theme; that intentionally differs from
       // the server-rendered markup, which doesn't know the client's theme.

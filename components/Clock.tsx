@@ -25,8 +25,8 @@ export function Clock() {
     // minute can legitimately differ between them.
     <span
       suppressHydrationWarning
-      className="whitespace-nowrap text-[11px] uppercase tracking-[0.12em]"
-      style={{ color: "var(--faint)" }}
+      className="font-signature whitespace-nowrap text-data leading-data uppercase tracking-data tabular-nums"
+      style={{ color: "var(--muted)" }}
     >
       Lagos · {time}
     </span>

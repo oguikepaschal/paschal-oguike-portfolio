@@ -62,7 +62,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute top-0 right-0 z-10 flex h-9 w-9 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-white/15 text-[15px] text-white backdrop-blur-md transition-colors duration-300 bg-[rgba(23,19,16,0.55)] hover:bg-[rgba(23,19,16,0.8)]"
+              className="absolute top-0 right-0 z-10 flex h-9 w-9 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-white/15 text-tag text-white backdrop-blur-md transition-colors duration-300 bg-[rgba(23,19,16,0.55)] hover:bg-[rgba(23,19,16,0.8)]"
             >
               ✕
             </button>
@@ -71,12 +71,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute bottom-0 right-0 z-10 flex h-9 w-9 translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-white/15 text-[15px] text-white backdrop-blur-md transition-colors duration-300 bg-[rgba(23,19,16,0.55)] hover:bg-[rgba(23,19,16,0.8)] lg:hidden"
+              className="absolute bottom-0 right-0 z-10 flex h-9 w-9 translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-white/15 text-tag text-white backdrop-blur-md transition-colors duration-300 bg-[rgba(23,19,16,0.55)] hover:bg-[rgba(23,19,16,0.8)] lg:hidden"
             >
               ✕
             </button>
 
-            <div className="relative border-b" style={{ borderColor: "var(--rule)" }}>
+            <div className="relative border-b-2" style={{ borderColor: "var(--rule)" }}>
               <div className="relative aspect-video w-full overflow-hidden" style={{ background: "var(--wash)" }}>
                 {project.image && (
                   <Image
@@ -91,40 +91,40 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
 
             <div className="p-[clamp(24px,3.4vw,44px)]">
-              <div className="flex items-center gap-3.5 text-[10px] uppercase tracking-[0.18em]" style={{ color: "var(--muted)" }}>
+              <div className="flex items-center gap-3.5 text-label leading-label uppercase tracking-label" style={{ color: "var(--muted)" }}>
                 <span style={{ color: "var(--accent)" }}>{project.number}</span>
                 <span>{project.status}</span>
                 <span className="h-px flex-1" style={{ background: "var(--rule)" }} />
               </div>
 
-              <h3 className="font-display mt-3.5 mb-5 text-center text-[clamp(28px,3.4vw,44px)] leading-[1.1] font-normal tracking-[-0.015em]">
+              <h3 className="font-display mt-3.5 mb-5 text-center text-mtitle leading-mtitle font-extrabold uppercase tracking-mtitle">
                 {project.title}
               </h3>
 
               <p
-                className="mb-[clamp(28px,3.4vw,40px)] text-[clamp(17px,1.7vw,22px)] leading-[1.5] text-pretty italic"
+                className="font-text mb-[clamp(28px,3.4vw,40px)] text-lead leading-lead tracking-lead text-pretty italic"
                 style={{ color: "var(--ink)" }}
               >
                 {project.tagline}
               </p>
 
               <div
-                className="flex flex-col gap-[clamp(24px,3vw,40px)] border-t pt-10 pb-10"
+                className="flex flex-col gap-[clamp(24px,3vw,40px)] border-t-2 pt-10 pb-10"
                 style={{ borderColor: "var(--rule)" }}
               >
                 <div>
-                  <div className="mb-3 text-center text-[10px] uppercase tracking-[0.18em]" style={{ color: "var(--accent)" }}>
+                  <div className="mb-3 text-center text-label leading-label uppercase tracking-label" style={{ color: "var(--accent)" }}>
                     The problem
                   </div>
-                  <p className="m-0 text-[14.5px] leading-[1.65] text-pretty" style={{ color: "var(--body)" }}>
+                  <p className="font-text m-0 text-small leading-small tracking-small text-pretty" style={{ color: "var(--body)" }}>
                     {project.problem}
                   </p>
                 </div>
                 <div>
-                  <div className="mb-3 text-center text-[10px] uppercase tracking-[0.18em]" style={{ color: "var(--accent)" }}>
+                  <div className="mb-3 text-center text-label leading-label uppercase tracking-label" style={{ color: "var(--accent)" }}>
                     What broke
                   </div>
-                  <ul className="m-0 flex list-none flex-col gap-3 p-0 text-[14.5px] leading-[1.6]" style={{ color: "var(--body)" }}>
+                  <ul className="font-text m-0 flex list-none flex-col gap-3 p-0 text-small leading-small tracking-small" style={{ color: "var(--body)" }}>
                     {project.whatBroke.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
@@ -132,11 +132,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
               </div>
 
-              <div className="border-t pt-10" style={{ borderColor: "var(--rule)" }}>
-                <div className="mb-3 text-center text-[10px] uppercase tracking-[0.18em]" style={{ color: "var(--accent)" }}>
+              <div className="border-t-2 pt-10" style={{ borderColor: "var(--rule)" }}>
+                <div className="mb-3 text-center text-label leading-label uppercase tracking-label" style={{ color: "var(--accent)" }}>
                   Decisions
                 </div>
-                <ul className="m-0 flex list-none flex-col gap-2.5 p-0 text-[14.5px] leading-[1.6]" style={{ color: "var(--body)" }}>
+                <ul className="font-text m-0 flex list-none flex-col gap-2.5 p-0 text-small leading-small tracking-small" style={{ color: "var(--body)" }}>
                   {project.decisions.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
@@ -144,7 +144,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
 
               <div
-                className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
+                className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t-2 pt-5"
                 style={{ borderColor: "var(--rule)" }}
               >
                 <div className="flex flex-wrap items-center gap-2">
@@ -168,13 +168,13 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
                 <div className="flex flex-wrap items-center gap-4">
                   <span
-                    className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.12em]"
+                    className="inline-flex items-center gap-2 text-label leading-label uppercase tracking-label"
                     style={{ color: "var(--muted)" }}
                   >
                     <img src="https://cdn.simpleicons.org/github/8a8177" alt="" width={13} height={13} className="block" />
                     Codebase is private
                   </span>
-                  <a href={project.liveSiteHref} className="text-[10px] uppercase tracking-[0.16em]" style={{ color: "var(--accent)" }}>
+                  <a href={project.liveSiteHref} className="text-label leading-label uppercase tracking-label" style={{ color: "var(--accent)" }}>
                     View live site →
                   </a>
                 </div>

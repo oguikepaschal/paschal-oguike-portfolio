@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
 import { Card } from "@/components/ui/Card";
 import { SectionHeadline } from "@/components/ui/SectionHeadline";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -30,7 +29,7 @@ function SkillCell({ skill }: { skill: Skill }) {
           className="skill-slot-fallback h-6 w-6 object-contain"
         />
       </div>
-      <span className="text-[9px] uppercase tracking-[0.08em]" style={{ color: "var(--muted)" }}>
+      <span className="text-caption leading-caption uppercase tracking-caption" style={{ color: "var(--muted)" }}>
         {skill.label}
       </span>
     </div>
@@ -43,7 +42,7 @@ function CategoryCard({ category }: { category: SkillCategory }) {
   return (
     <Card style={{ background: "transparent" }}>
       <div
-        className="border-b pb-3.5 text-[10px] uppercase tracking-[0.18em]"
+        className="border-b-2 pb-3.5 text-label leading-label uppercase tracking-label"
         style={{ borderColor: "var(--rule)", color: "var(--accent)" }}
       >
         {category.title}
@@ -62,7 +61,6 @@ function CategoryCard({ category }: { category: SkillCategory }) {
 const MOBILE_QUERY = "(max-width: 639px)";
 /** Same query string CursorField.tsx uses to switch itself off. */
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-const AUTOPLAY_DELAY_MS = 2000;
 
 /** True only below `sm` and only when the visitor hasn't asked for reduced
  * motion — everything else (tablet, desktop, reduced motion on mobile) falls
@@ -93,7 +91,7 @@ function useMobileCarousel() {
 }
 
 function MobileSkillsCarousel() {
-  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: AUTOPLAY_DELAY_MS })]);
+  const [emblaRef] = useEmblaCarousel({ loop: true });
 
   return (
     <div className="overflow-hidden" ref={emblaRef}>
@@ -134,7 +132,7 @@ export function SkillsMatrix() {
           What I reach for, by default.
         </SectionHeadline>
         <p
-          className="text-[16px] leading-[1.6] text-pretty lg:col-start-10 lg:col-span-3 lg:self-end"
+          className="font-text text-small leading-small tracking-small text-pretty lg:col-start-10 lg:col-span-3 lg:self-end"
           style={{ color: "var(--muted)" }}
         >
           The stack, roughly.

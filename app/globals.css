@@ -1,25 +1,104 @@
 @import "tailwindcss";
 
+/* ---------- Type scale (Modernist handoff, direction C) ----------
+   Archivo (condensed, uppercase) carries display/heading/brand roles;
+   Source Serif 4 carries reading text (lead/body/note); plain upright
+   Archivo — the body default, no extra class needed — carries UI/label/
+   caption/tag roles. Sizes are clamp(mobile, fluid, desktop) built from
+   the handoff's two fixed breakpoints (390 / 1440); tracking and leading
+   use the handoff's desktop value, which the two breakpoints only differ
+   from by rounding. */
+@theme {
+  --text-display: clamp(52px, 6.7vw, 96px);
+  --tracking-display: -0.005em;
+  --leading-display: 0.92;
+
+  --text-headline: clamp(42px, 4.5vw, 64px);
+  --tracking-headline: 0em;
+  --leading-headline: 0.95;
+
+  --text-title: clamp(26px, 2.1vw, 30px);
+  --tracking-title: 0.005em;
+  --leading-title: 1;
+
+  --text-mtitle: clamp(34px, 3.6vw, 52px);
+  --tracking-mtitle: 0em;
+  --leading-mtitle: 0.95;
+
+  --text-note: clamp(23px, 1.9vw, 28px);
+  --tracking-note: -0.01em;
+  --leading-note: 1.25;
+
+  --text-email: clamp(28px, 3.9vw, 56px);
+  --tracking-email: -0.01em;
+  --leading-email: 1.05;
+
+  --text-lead: clamp(19px, 1.5vw, 21px);
+  --tracking-lead: 0em;
+  --leading-lead: 1.5;
+
+  --text-body: clamp(17px, 1.25vw, 18px);
+  --tracking-body: 0em;
+  --leading-body: 1.6;
+
+  --text-small: 16px;
+  --tracking-small: 0em;
+  --leading-small: 1.5;
+
+  --text-brand: 20px;
+  --tracking-brand: 0.02em;
+  --leading-brand: 1;
+
+  --text-label: clamp(11px, 0.85vw, 12px);
+  --tracking-label: 0.14em;
+  --leading-label: 1.2;
+
+  --text-caption: clamp(12px, 0.9vw, 13px);
+  --tracking-caption: 0.01em;
+  --leading-caption: 1.4;
+
+  --text-ui: clamp(12px, 0.9vw, 13px);
+  --tracking-ui: 0.08em;
+  --leading-ui: 1.1;
+
+  --text-tag: 12px;
+  --tracking-tag: 0.01em;
+  --leading-tag: 1;
+
+  --text-data: 12px;
+  --tracking-data: 0.04em;
+  --leading-data: 1;
+}
+
+/* Exposes the two theme colors as Tailwind color utilities (`text-ink`,
+   `text-accent`) instead of an arbitrary color value on every call site —
+   `inline` so each resolves against the cascade at use time and still
+   follows [data-theme]/[data-inverse], not a value frozen here. */
+@theme inline {
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+}
+
 :root,
 [data-theme="light"] {
-  --paper: #faf7f1;
-  --ink: #171310;
-  --body: #3c362e;
-  --muted: #71695e;
-  --faint: #8a8177;
-  --rule: #e4ddd1;
-  --chip: #dcd4c7;
-  --wash: #f2ece1;
-  --accent: #c2401a;
-  --card: #fbf9f4;
-  --accordion-border: rgba(23, 19, 16, 0.14);
+  --paper: #f3f2f2;
+  --ink: #201e1d;
+  --body: #444141;
+  --muted: #605d5d;
+  --faint: #706d6d;
+  --rule: rgba(32, 30, 29, 0.4);
+  --chip: #f8f4f4;
+  --wash: rgba(32, 30, 29, 0.07);
+  --accent: #ae1800;
+  --card: #eae9e9;
+  --accordion-border: rgba(32, 30, 29, 0.4);
 
   /* Cursor glare on spread project cards (components/Projects.tsx). A white
      glare blended with soft-light reads well against the dark theme's --card
      but is invisible against this one's near-white --card, so light mode
      tints the glare with --accent and composites it normally instead. */
-  --glare-core: rgba(194, 64, 26, 0.16);
-  --glare-edge: rgba(194, 64, 26, 0);
+  --glare-core: rgba(174, 24, 0, 0.16);
+  --glare-edge: rgba(174, 24, 0, 0);
   --glare-blend: normal;
 
   /* One accent per word in the hero's FlipWord cycle (components/FlipWord.tsx,
@@ -36,15 +115,15 @@
   --flip-8: #3c4fa0; /* Vendor & Supply Portals */
   --flip-9: #55606e; /* Messaging Pipelines */
 
-  --inv-paper: #171310;
-  --inv-ink: #faf7f1;
-  --inv-body: #b8afa3;
-  --inv-muted: #a79e92;
-  --inv-faint: #a79e92;
-  --inv-rule: #332e28;
-  --inv-chip: #3a342d;
-  --inv-wash: #221d19;
-  --inv-accent: #e4653c;
+  --inv-paper: #201e1d;
+  --inv-ink: #f3f2f2;
+  --inv-body: #d7d3d3;
+  --inv-muted: #bab6b6;
+  --inv-faint: #9b9797;
+  --inv-rule: rgba(243, 242, 242, 0.28);
+  --inv-chip: #2d2b2b;
+  --inv-wash: #2d2b2b;
+  --inv-accent: #ff563c;
 
   /* Mobile nav takeover (components/MobileMenu.tsx). Light mode drops the
      dark scrim for an opaque panel matching --paper exactly. */
@@ -52,17 +131,17 @@
 }
 
 [data-theme="dark"] {
-  --paper: #100e0c;
-  --ink: #f4efe6;
-  --body: #bdb5a9;
-  --muted: #948b7e;
-  --faint: #857c70;
-  --rule: #2a2521;
-  --chip: #35302a;
-  --wash: #1b1714;
-  --accent: #e4653c;
-  --card: #191512;
-  --accordion-border: rgba(255, 255, 255, 0.14);
+  --paper: #171514;
+  --ink: #f3f2f2;
+  --body: #d7d3d3;
+  --muted: #bab6b6;
+  --faint: #9b9797;
+  --rule: rgba(243, 242, 242, 0.3);
+  --chip: #2d2b2b;
+  --wash: rgba(243, 242, 242, 0.07);
+  --accent: #ff563c;
+  --card: #22201f;
+  --accordion-border: rgba(243, 242, 242, 0.3);
 
   /* Light-mode counterparts above; white soft-light is the treatment this
      theme's dark --card was tuned for. */
@@ -82,19 +161,19 @@
   --flip-8: #93a3ea;
   --flip-9: #a9b4c2;
 
-  --inv-paper: #1c1815;
-  --inv-ink: #f8f4ec;
-  --inv-body: #c6bdb1;
-  --inv-muted: #9a9185;
-  --inv-faint: #a79e92;
-  --inv-rule: #35302a;
-  --inv-chip: #3d3730;
-  --inv-wash: #262019;
-  --inv-accent: #e4653c;
+  --inv-paper: #211f1e;
+  --inv-ink: #f3f2f2;
+  --inv-body: #d7d3d3;
+  --inv-muted: #bab6b6;
+  --inv-faint: #9b9797;
+  --inv-rule: rgba(243, 242, 242, 0.2);
+  --inv-chip: #2d2b2b;
+  --inv-wash: #2d2b2b;
+  --inv-accent: #ff563c;
 
   /* Unchanged from before the light-mode redesign: dark mode keeps the
      literal dark scrim (not var(--ink), which is a light color here). */
-  --nav-scrim: rgba(23, 19, 16, 0.94);
+  --nav-scrim: rgba(23, 21, 20, 0.94);
 }
 
 /* Sections that sit on the dark "inverse" surface (e.g. Notes, Contact in
@@ -134,6 +213,13 @@ a {
   color: var(--paper);
 }
 
+/* Themed keyboard focus ring, replacing the browser default outline
+   everywhere — matches the handoff's own interaction-states rule. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* Single-color (near-black) logo marks need inverting to stay visible on a
    dark background; multi-color brand marks are left alone. */
 [data-theme="dark"] img[data-mono] {
@@ -154,9 +240,19 @@ a {
   }
 }
 
-/* Bodoni Moda is reserved for display headings; body text stays on the
-   sans stack set above. */
+/* Direction C: Archivo condensed on its width axis carries display/heading/
+   brand roles (paired with `uppercase` at each call site, except the email
+   role which stays mixed-case) — the sans stack set on body is the same
+   family at its normal width, so only font-stretch changes here. */
 .font-display {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-stretch: 75%;
+}
+
+/* Source Serif 4 carries reading text — hero lead-in, About copy, notes,
+   project descriptions. UI/label/caption/tag roles use the plain sans
+   stack already set on body, so they need no class of their own. */
+.font-text {
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }
 

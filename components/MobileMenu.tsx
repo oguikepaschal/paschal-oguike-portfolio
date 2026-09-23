@@ -126,7 +126,7 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="flex h-[34px] w-[34px] items-center justify-center transition-colors duration-300 hover:text-[var(--ink)]"
+        className="flex h-[34px] w-[34px] items-center justify-center transition-colors duration-300 hover:text-ink"
         style={{ color: "var(--muted)" }}
       >
         <MenuIcon open={open} />
@@ -158,7 +158,7 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
                     type="button"
                     onClick={close}
                     aria-label="Close menu"
-                    className="flex h-[34px] w-[34px] items-center justify-center text-[var(--ink)] transition-colors duration-300 hover:text-[var(--accent)]"
+                    className="flex h-[34px] w-[34px] items-center justify-center text-ink transition-colors duration-300 hover:text-accent"
                   >
                     <MenuIcon open />
                   </button>
@@ -177,7 +177,7 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
                           ref={i === 0 ? firstLinkRef : undefined}
                           href={link.href}
                           onClick={close}
-                          className="font-display text-[clamp(36px,9vw,64px)] leading-[1.1] font-normal tracking-[-0.01em] text-[var(--ink)] transition-colors duration-300 hover:text-[var(--accent)] focus-visible:text-[var(--accent)]"
+                          className="font-display text-headline leading-headline font-extrabold uppercase tracking-headline text-ink transition-colors duration-300 hover:text-accent focus-visible:text-accent"
                         >
                           {link.label}
                         </a>
@@ -190,7 +190,7 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
                   variants={ITEM_VARIANTS}
                   initial="hidden"
                   animate="visible"
-                  className="flex justify-center pb-9 text-[11px] uppercase tracking-[0.12em] text-[var(--ink)]"
+                  className="flex justify-center pb-9"
                 >
                   <Clock />
                 </motion.div>

@@ -25,7 +25,7 @@ export function Contact() {
           </SectionHeadline>
 
           <p
-            className="m-0 mb-7 max-w-[34em] text-[clamp(20px,1.8vw,24px)] leading-[1.5] text-pretty"
+            className="font-text m-0 mb-7 max-w-[34em] text-lead leading-lead tracking-lead text-pretty"
             style={{ color: "var(--body)" }}
           >
             Have a product that needs to exist, or a codebase that needs a spine? I take on a small number of
@@ -34,7 +34,7 @@ export function Contact() {
 
           <a
             href={`mailto:${EMAIL}`}
-            className="font-display inline-block bg-[linear-gradient(var(--accent),var(--accent))] bg-[length:0%_2px] bg-no-repeat bg-[position:0_96%] text-[clamp(28px,4.2vw,60px)] leading-[1.15] font-medium italic break-words transition-[background-size] duration-[400ms] hover:bg-[length:100%_2px]"
+            className="font-display inline-block bg-[linear-gradient(var(--accent),var(--accent))] bg-[length:0%_2px] bg-no-repeat bg-[position:0_96%] text-email leading-email tracking-email font-bold italic break-words transition-[background-size] duration-[400ms] hover:bg-[length:100%_2px]"
           >
             {EMAIL}
           </a>

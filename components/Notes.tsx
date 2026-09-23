@@ -43,16 +43,19 @@ export function Notes() {
           <a
             key={note.title}
             href="#notes"
-            className="grid grid-cols-1 items-baseline gap-x-6 gap-y-2 border-t py-6 transition-colors duration-300 hover:bg-[var(--wash)] lg:grid-cols-12"
+            className="grid grid-cols-1 items-baseline gap-x-6 gap-y-2 border-t-2 py-6 transition-colors duration-300 hover:bg-[var(--wash)] lg:grid-cols-12"
             style={{ borderColor: "var(--rule)" }}
           >
-            <span className="text-[11px] lg:col-start-1 lg:col-span-1" style={{ color: "var(--accent)" }}>
+            <span className="text-caption leading-caption tracking-caption lg:col-start-1 lg:col-span-1" style={{ color: "var(--accent)" }}>
               —
             </span>
-            <span className="text-[clamp(20px,1.9vw,26px)] leading-[1.25] font-normal lg:col-start-2 lg:col-span-9">
+            <span className="font-text text-note leading-note tracking-note font-normal lg:col-start-2 lg:col-span-9">
               {note.title}
             </span>
-            <span className="text-[11px] lg:col-start-12 lg:col-span-1 lg:text-right" style={{ color: "var(--faint)" }}>
+            <span
+              className="text-caption leading-caption tracking-caption tabular-nums lg:col-start-12 lg:col-span-1 lg:text-right"
+              style={{ color: "var(--faint)" }}
+            >
               {note.dateWritten}
             </span>
           </a>

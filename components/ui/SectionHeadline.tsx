@@ -14,7 +14,7 @@ interface SectionHeadlineProps {
 export function SectionHeadline({ children, className = "", italic = false }: SectionHeadlineProps) {
   return (
     <h2
-      className={`font-display m-0 text-[clamp(32px,5vw,80px)] leading-[1.08] font-medium tracking-[-0.015em] text-balance ${
+      className={`font-display m-0 text-headline leading-headline font-extrabold uppercase tracking-headline text-balance ${
         italic ? "italic" : ""
       } ${className}`}
     >

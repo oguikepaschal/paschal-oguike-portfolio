@@ -27,11 +27,11 @@ const TONE_STYLES: Record<BadgeTone, { border: string; color: string }> = {
 };
 
 const SIZE_CLASSES: Record<BadgeSize, string> = {
-  sm: "gap-1.5 px-2 py-[3px] text-[9px] uppercase tracking-[0.16em]",
-  md: "gap-3 px-3.5 py-[7px] text-[11px] uppercase tracking-[0.12em]",
+  sm: "gap-1.5 px-2 py-[3px] text-label leading-label uppercase tracking-label",
+  md: "gap-3 px-3.5 py-[7px] text-label leading-label uppercase tracking-label",
 };
 
-const TAG_CLASSES = "gap-0 px-[7px] py-[3px] text-[10.5px] tracking-[0.04em]";
+const TAG_CLASSES = "gap-0 px-[7px] py-[3px] text-tag leading-tag tracking-tag";
 const TAG_TONE = { border: "var(--rule)", color: "var(--body)" };
 
 /**
@@ -52,7 +52,7 @@ export function Badge({
   const { border, color } = isTag ? TAG_TONE : TONE_STYLES[tone];
   const sizing = isTag ? TAG_CLASSES : SIZE_CLASSES[size];
   const classes = `inline-flex items-center ${showBorder ? "border" : ""} font-medium whitespace-nowrap transition-colors duration-300 ${sizing} ${
-    href ? "hover:border-[var(--ink)] hover:bg-[var(--wash)] hover:text-[var(--ink)]" : ""
+    href ? "hover:border-[var(--ink)] hover:bg-[var(--wash)] hover:text-ink" : ""
   } ${className}`;
   const style = { ...(showBorder ? { borderColor: border } : {}), color };
 

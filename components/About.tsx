@@ -33,7 +33,7 @@ export function About() {
         <GlassScrim blur={5} tint={22} />
         <div className="relative flex flex-col gap-6 text-center">
           {PARAGRAPHS.map((paragraph, i) => (
-            <p key={i} className="m-0 text-[16px] leading-[1.7] text-pretty" style={{ color: "var(--body)" }}>
+            <p key={i} className="font-text m-0 text-body leading-body tracking-body text-pretty" style={{ color: "var(--body)" }}>
               {paragraph}
             </p>
           ))}

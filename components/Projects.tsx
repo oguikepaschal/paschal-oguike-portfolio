@@ -223,7 +223,7 @@ function ProjectCard({
       >
         <div className="flex items-center justify-between gap-3">
           <span className="flex min-w-0 flex-1 items-center gap-2.5">
-            <span className="shrink-0 text-[11px]" style={{ color: "var(--accent)" }}>
+            <span className="shrink-0 text-caption leading-caption tracking-caption tabular-nums" style={{ color: "var(--accent)" }}>
               {project.number}
             </span>
             {flat ? (
@@ -248,7 +248,7 @@ function ProjectCard({
         </div>
 
         <h3
-          className={`font-display mt-5 mb-2 text-[25px] leading-[1.15] font-normal tracking-[-0.01em] ${
+          className={`font-display mt-5 mb-2 text-title leading-title font-bold uppercase tracking-title ${
             flat ? "text-center" : ""
           }`}
         >
@@ -265,7 +265,7 @@ function ProjectCard({
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="flex flex-1 flex-col overflow-hidden"
             >
-              <p className="mb-[22px] text-[13.5px] leading-[1.5] text-pretty" style={{ color: "var(--muted)" }}>
+              <p className="mb-[22px] text-caption leading-caption tracking-caption text-pretty" style={{ color: "var(--muted)" }}>
                 {project.description}
               </p>
 
@@ -280,7 +280,7 @@ function ProjectCard({
               </div>
 
               <div
-                className="flex items-center justify-between gap-3 border-t pt-3.5 text-[10px] uppercase tracking-[0.16em]"
+                className="flex items-center justify-between gap-3 border-t-2 pt-3.5 text-label leading-label uppercase tracking-label"
                 style={{ borderColor: "var(--rule)", color: "var(--accent)" }}
               >
                 {/* Shares the row rather than adding one: a second line would
@@ -311,11 +311,11 @@ function ProjectCard({
               background: "linear-gradient(to top, var(--card) 72%, rgba(0,0,0,0))",
             }}
           >
-            <p className="m-0 line-clamp-4 text-[12.5px] leading-[1.5] text-pretty" style={{ color: "var(--body)" }}>
+            <p className="m-0 line-clamp-4 text-caption leading-caption tracking-caption text-pretty" style={{ color: "var(--body)" }}>
               {project.tagline}
             </p>
             <div
-              className="mt-3 border-t pt-3 text-[10px] uppercase tracking-[0.16em]"
+              className="mt-3 border-t-2 pt-3 text-label leading-label uppercase tracking-label"
               style={{ borderColor: "var(--rule)", color: "var(--accent)" }}
             >
               Read the detail →
@@ -406,7 +406,7 @@ export function Projects() {
           Shipped products, not tutorials.
         </SectionHeadline>
         <p
-          className="text-[16px] leading-[1.6] text-pretty lg:col-start-10 lg:col-span-3 lg:self-end"
+          className="font-text text-small leading-small tracking-small text-pretty lg:col-start-10 lg:col-span-3 lg:self-end"
           style={{ color: "var(--muted)" }}
         >
           Click any card to see the technical detail: the problem, the decisions, the parts that broke.
@@ -426,7 +426,7 @@ export function Projects() {
             aria-controls="work-deck"
             animate={!hasToggled && !prefersReducedMotion ? { x: [0, -4, 4, -4, 4, 0] } : { x: 0 }}
             transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3.5, ease: "easeInOut" }}
-            className="inline-flex items-center border px-3.5 py-[7px] text-[11px] font-medium uppercase tracking-[0.12em] whitespace-nowrap transition-colors duration-300 hover:border-[var(--ink)] hover:bg-[var(--wash)] hover:text-[var(--ink)]"
+            className="inline-flex min-h-11 items-center border px-3.5 text-ui leading-ui font-semibold uppercase tracking-ui whitespace-nowrap transition-colors duration-300 hover:border-[var(--ink)] hover:bg-[var(--wash)] hover:text-ink"
             style={{ borderColor: "var(--chip)", color: "var(--body)" }}
           >
             {deckOpen ? "Stack cards" : "Spread cards"}

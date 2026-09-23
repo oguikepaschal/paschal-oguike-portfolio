@@ -34,12 +34,12 @@ export function Footer() {
       className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-[clamp(24px,4.5vw,64px)] pt-9 pb-[clamp(28px,4vw,40px)]"
       style={{ background: "var(--paper)" }}
     >
-      <div className="flex flex-wrap gap-8 text-[11px] uppercase tracking-[0.14em]">
+      <div className="flex flex-wrap gap-8 text-label leading-label uppercase tracking-label">
         {LINKS.map((link) => (
           <a
             key={link.label}
             href={link.href}
-            className="transition-colors duration-300 hover:text-[var(--ink)]"
+            className="transition-colors duration-300 hover:text-ink"
             style={{ color: "var(--faint)" }}
           >
             {link.label}
@@ -49,13 +49,13 @@ export function Footer() {
           href="https://www.google.com/maps/contrib/108760833902033858252"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 transition-colors duration-300 hover:text-[var(--ink)]"
+          className="inline-flex items-center gap-1.5 transition-colors duration-300 hover:text-ink"
           style={{ color: "var(--faint)" }}
         >
           <PinIcon />
           Local Guide · Level 5
         </a>
-        <a href="#top" className="transition-colors duration-300 hover:text-[var(--ink)]" style={{ color: "var(--faint)" }}>
+        <a href="#top" className="transition-colors duration-300 hover:text-ink" style={{ color: "var(--faint)" }}>
           Back to top
         </a>
       </div>
