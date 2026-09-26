@@ -12,7 +12,7 @@ const NAV_LINKS = [
 export function Nav() {
   return (
     <header
-      className="relative z-30 flex items-center justify-between gap-4 border-b-2 px-[clamp(24px,4.5vw,64px)] py-[26px]"
+      className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b-2 px-[clamp(24px,4.5vw,64px)] py-[10px] md:relative md:py-[21px]"
       style={{ background: "var(--paper)", borderColor: "var(--rule)" }}
     >
       <a href="#top" className="font-display text-brand leading-brand font-extrabold uppercase tracking-brand">
@@ -32,7 +32,7 @@ export function Nav() {
         <ThemeToggle />
       </div>
 
-      <div className="flex items-center gap-3 md:hidden">
+      <div className="flex items-center gap-1 md:hidden">
         <ThemeToggle />
         <MobileMenu links={NAV_LINKS} />
       </div>

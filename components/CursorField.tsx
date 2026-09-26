@@ -168,7 +168,7 @@ function FieldIcon({
   // opacity also depends on restOpacity — a continuously-changing value tied
   // to scroll, not a discrete mode switch — so it needs a per-frame target,
   // not a one-shot `animate` prop.
-  const opacity = useSpring(0.22 + item.depth * 0.5, { stiffness: 120, damping: 24 });
+  const opacity = useSpring(0.1 + item.depth * 0.2, { stiffness: 120, damping: 24 });
   const [slot, setSlot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -190,16 +190,18 @@ function FieldIcon({
     } else if (mode === "resting") {
       opacity.set((0.1 + item.depth * 0.12) * restOpacity.get());
     } else if (mode === "swarm") {
-      // Dim relative to how it used to be (was 0.55-0.90 — vivid enough to
-      // compete with any text it swarmed over). This only matters outside
-      // the skills grid, where there's no GlassScrim to blur it down for
-      // free, so it needs to sit dim on its own: visible enough to read as
-      // "alive," but never so opaque it fights with page copy underneath it.
-      opacity.set(0.25 + item.depth * 0.2);
+      // Kept faint (0.14-0.28): outside the skills grid there's no
+      // GlassScrim to blur it down, so it has to sit dim on its own. Visible
+      // enough to read as "alive," never strong enough to compete with the
+      // copy it drifts across.
+      opacity.set(0.14 + item.depth * 0.14);
     } else if (mode === "settling") {
       opacity.set(0.5 + item.depth * 0.35);
     } else {
-      opacity.set(0.22 + item.depth * 0.5);
+      // Idle rest spots are fixed viewport positions that inevitably land on
+      // headings and body copy, so they rest as background texture
+      // (0.1-0.3), not as a second layer of content.
+      opacity.set(0.1 + item.depth * 0.2);
     }
 
     if (mode === "swarm") {
@@ -407,17 +409,19 @@ export function CursorField({ items = [] }: { items?: CursorFieldItem[] }) {
       // never activates there regardless of movement — icons just sit at
       // their idle rest spots. It only wakes up once the pointer is past the
       // hero, in the section below it.
-      const hero = document.getElementById("top");
-      const insideHero = hero
-        ? (() => {
-            const hr = hero.getBoundingClientRect();
-            return x >= hr.left && x <= hr.right && y >= hr.top && y <= hr.bottom;
-          })()
-        : false;
+      // About gets the same treatment: it's three paragraphs of reading, and
+      // a swarm following the cursor across them is the loudest thing on
+      // the page at exactly the moment someone is trying to read.
+      const insideReadingZone = ["top", "about"].some((id) => {
+        const el = document.getElementById(id);
+        if (!el) return false;
+        const r = el.getBoundingClientRect();
+        return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+      });
 
       const section = document.getElementById("stack");
       next = "idle";
-      if (!insideHero && section) {
+      if (!insideReadingZone && section) {
         const r = section.getBoundingClientRect();
         // Hysteresis: once docked, the cursor must clear the section by
         // UNDOCK_MARGIN before it counts as "left" — a bare edge-touch no
@@ -493,7 +497,11 @@ export function CursorField({ items = [] }: { items?: CursorFieldItem[] }) {
 
   return (
     <LayoutGroup>
-      <div aria-hidden className="pointer-events-none fixed inset-0 z-20 overflow-hidden">
+      <div
+        aria-hidden
+        data-field-resting={mode === "resting" ? "" : undefined}
+        className="pointer-events-none fixed inset-0 z-20 overflow-hidden"
+      >
         {items.map((item) => (
           <FieldIcon
             key={item.id}

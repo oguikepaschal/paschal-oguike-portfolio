@@ -72,7 +72,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="flex h-[34px] w-[34px] items-center justify-center transition-colors duration-300 hover:text-ink"
+      className="flex h-11 w-11 items-center justify-center transition-colors duration-300 hover:text-ink"
       style={{ color: "var(--muted)" }}
     >
       {theme === "dark" ? <SunIcon /> : <MoonIcon />}

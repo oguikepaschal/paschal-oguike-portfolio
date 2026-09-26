@@ -1,34 +1,35 @@
 import Image from "next/image";
 import { FlipWord } from "@/components/FlipWord";
 
-const HANDLES = [
-  "Money",
-  "Inventory",
-  "Operations",
-  "Internal Admin Tools",
-  "Customer Support",
-  "Internal Analytics",
-  "Billing & Invoicing",
-  "Vendor & Supply Portals",
-  "Messaging Pipelines",
-];
+/** Kept to short single words: the slot is sized to the longest entry, so
+ * one multi-word phrase would reserve two or three lines of empty space
+ * under every short word. Each maps to real work further down the page. */
+const HANDLES = ["Money", "Inventory", "Operations", "Invoicing"];
 
-/** Rendered twice — under the paragraph on desktop, after the photo on
- * mobile (see the two call sites below) — since the two spots live in
- * separate flex/grid containers that a plain `order-*` utility can't
- * reorder across. `visibility` toggles which instance is on screen at a
- * given breakpoint; the hidden one is `display:none`, so nothing here
- * duplicates in the accessibility tree. */
-function ResumeButton({ visibility }: { visibility: string }) {
+const EMAIL = "paschaloguike@gmail.com";
+
+/** The two actions a visitor came for, placed straight under the headline
+ * so they sit inside the first viewport at every width, rather than after
+ * the intro paragraph (desktop) or the portrait (mobile). */
+function HeroActions() {
   return (
-    <a
-      href="/Oguike_Paschal_Chidera_Resume.pdf"
-      download
-      className={`${visibility} min-h-11 w-fit items-center gap-3 border px-3.5 text-ui leading-ui font-semibold uppercase tracking-ui transition-opacity duration-300 hover:opacity-85`}
-      style={{ background: "var(--accent)", borderColor: "var(--accent)", color: "var(--paper)" }}
-    >
-      Download Résumé
-    </a>
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+      <a
+        href="/Oguike_Paschal_Chidera_Resume.pdf"
+        download
+        className="inline-flex min-h-11 w-fit items-center gap-3 border px-3.5 text-ui leading-ui font-semibold uppercase tracking-ui transition-opacity duration-300 hover:opacity-85"
+        style={{ background: "var(--accent)", borderColor: "var(--accent)", color: "var(--paper)" }}
+      >
+        Download Résumé
+      </a>
+      <a
+        href={`mailto:${EMAIL}`}
+        className="inline-flex min-h-11 items-center text-ui leading-ui font-semibold uppercase tracking-ui underline decoration-1 underline-offset-4 transition-colors duration-300 hover:text-accent"
+        style={{ color: "var(--body)" }}
+      >
+        Email me
+      </a>
+    </div>
   );
 }
 
@@ -36,7 +37,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-6 lg:gap-y-0 px-[clamp(24px,4.5vw,64px)] pt-[clamp(64px,10vw,128px)] pb-[clamp(64px,11vw,176px)]"
+      className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-6 lg:gap-y-0 px-[clamp(24px,4.5vw,64px)] pt-[clamp(40px,10vw,128px)] pb-[clamp(48px,11vw,176px)]"
     >
       {/* Heading column: on desktop this is the right-hand block (photo takes
           the left), starting at the top row and running tall enough to sit
@@ -49,13 +50,15 @@ export function Hero() {
           Hi, my name is Paschal
         </p>
 
-        <h1 className="font-display m-0 text-center text-display leading-display font-extrabold uppercase tracking-display text-balance lg:text-left">
-          I build web applications that handle{" "}
+        <h1 className="font-display m-0 text-left text-display leading-display font-extrabold uppercase tracking-display text-balance">
+          I build web applications that&nbsp;handle{" "}
           <span className="italic">
-            <FlipWord words={HANDLES} />
+            <FlipWord words={HANDLES} intervalMs={2000} />
           </span>{" "}
           end to end.
         </h1>
+
+        <HeroActions />
 
         <p
           className="font-text block text-lead leading-lead tracking-lead text-pretty max-w-[62ch]"
@@ -66,8 +69,6 @@ export function Hero() {
           to stay accurate, forms that have to survive a non-technical user. Most of what&apos;s here came out of
           solving an actual operational problem for a business, not a tutorial.
         </p>
-
-        <ResumeButton visibility="hidden lg:inline-flex" />
       </div>
 
       {/* Photo column: left side on desktop, starting one row down from the
@@ -75,7 +76,7 @@ export function Hero() {
           above. Wider than the old 4-col version (5 of 12) since it's now
           the left column's sole visual anchor rather than a small aside
           squeezed under the section label. */}
-      <div className="mx-auto w-full max-w-[280px] sm:max-w-[340px] lg:mx-auto lg:max-w-[360px] lg:col-start-1 lg:col-span-5 lg:row-start-2 lg:mt-[clamp(28px,4vw,64px)]">
+      <div className="mx-auto w-full max-w-[200px] sm:max-w-[340px] lg:mx-auto lg:max-w-[360px] lg:col-start-1 lg:col-span-5 lg:row-start-2 lg:mt-[clamp(28px,4vw,64px)]">
         <div className="relative aspect-[4/5] w-full overflow-hidden">
           <Image
             src="/images/hero-portrait-4.png"
@@ -94,8 +95,6 @@ export function Hero() {
           PO / 2026
         </div>
       </div>
-
-      <ResumeButton visibility="mx-auto inline-flex lg:hidden" />
     </section>
   );
 }

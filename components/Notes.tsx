@@ -38,12 +38,13 @@ export function Notes() {
         </SectionHeadline>
       </div>
 
-      <div className="flex flex-col">
+      {/* Plain list items, not links: there are no note pages to open yet, and
+          a row that looks clickable but goes nowhere reads as broken. */}
+      <ul className="m-0 flex list-none flex-col p-0">
         {NOTES.map((note) => (
-          <a
+          <li
             key={note.title}
-            href="#notes"
-            className="grid grid-cols-1 items-baseline gap-x-6 gap-y-2 border-t-2 py-6 transition-colors duration-300 hover:bg-[var(--wash)] lg:grid-cols-12"
+            className="grid grid-cols-1 items-baseline gap-x-6 gap-y-2 border-t-2 py-6 lg:grid-cols-12"
             style={{ borderColor: "var(--rule)" }}
           >
             <span className="text-caption leading-caption tracking-caption lg:col-start-1 lg:col-span-1" style={{ color: "var(--accent)" }}>
@@ -58,9 +59,9 @@ export function Notes() {
             >
               {note.dateWritten}
             </span>
-          </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

@@ -23,7 +23,9 @@ export interface Project {
   whatBroke: string[];
   decisions: string[];
   techIcons: ProjectTechIcon[];
-  liveSiteHref: string;
+  /** Public URL, when there is one. Omitted for private or unlaunched
+   * deployments, so the modal never shows a link that goes nowhere. */
+  liveSiteHref?: string;
   /** 16:9 screenshot filling the modal's header. Omitted projects keep the
    * blank placeholder until a photo is added. */
   image?: { src: string; alt: string };
@@ -63,7 +65,7 @@ export const PROJECTS: Project[] = [
       { label: "TypeScript", src: `${ICONS}/typescript` },
       { label: "Railway", src: `${ICONS}/railway`, mono: true },
     ],
-    liveSiteHref: "#",
+    liveSiteHref: "https://sterlingcapitalexchange.com",
     image: {
       src: "/images/projects/sterling-capital-v2.jpeg",
       alt: "Sterling Capital Exchange homepage with a live BTC/USD trading terminal",
@@ -100,13 +102,12 @@ export const PROJECTS: Project[] = [
       { label: "Auth.js v5", src: ORIGINAL_ICON_SRC.authJs, mono: true },
       { label: "Turborepo", src: `${ICONS}/turborepo` },
     ],
-    liveSiteHref: "#",
   },
   {
     id: "dealership",
     number: "03",
-    status: "Live",
-    tone: "accent",
+    status: "Not adopted",
+    tone: "muted",
     title: "Polanco Ops Hub",
     description: "Inventory and CRM built around how the team already works.",
     tags: ["React", "Node.js", "WhatsApp API", "Tailwind", "Supabase"],
@@ -132,7 +133,6 @@ export const PROJECTS: Project[] = [
       { label: "Tailwind", src: `${ICONS}/tailwindcss` },
       { label: "Supabase", src: `${ICONS}/supabase` },
     ],
-    liveSiteHref: "#",
     image: {
       src: "/images/projects/polanco-ops-hub.jpeg",
       alt: "Polanco Ops Hub inventory screen showing vehicle cards with availability status",
@@ -163,7 +163,7 @@ export const PROJECTS: Project[] = [
       { label: "Netlify", src: `${ICONS}/netlify` },
       { label: "Git", src: `${ICONS}/git` },
     ],
-    liveSiteHref: "#",
+    liveSiteHref: "https://thestonebridgeco.com",
     image: {
       src: "/images/projects/stonebridge.jpeg",
       alt: "Stonebridge Builders homepage hero reading “Building with Integrity. Crafted to Last.”",

@@ -12,7 +12,6 @@ import {
 } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  AnimatePresence,
   MotionConfig,
   motion,
   useMotionTemplate,
@@ -51,13 +50,10 @@ const FAN_ROTATE_STEP = 2;
 /** Room under the row for the arc plus the rotated cards' lower corners. */
 const FAN_RESERVE = 28;
 /** Single shared shadow for every card surface — the desktop fan lift, its
- * hover state, and the mobile resting/expanded rows — so color and spread
- * move together instead of three near-duplicate values drifting apart.
- * Warm --accent rather than a neutral rgba, with a tight spread so it reads
- * as a soft lift rather than a wide glow. Paired on collapsed mobile rows
- * with --accordion-border (globals.css), themed separately since a flat
- * rgba(255,255,255,0.1) reads fine on the dark --card but disappears
- * against the light theme's near-white one. */
+ * hover state, and the mobile rows — so color and spread move together
+ * instead of three near-duplicate values drifting apart. Warm --accent
+ * rather than a neutral rgba, with a tight spread so it reads as a soft
+ * lift rather than a wide glow. */
 const CARD_SHADOW = "0px 16px 32px -30px var(--accent)";
 const NO_SHADOW = "0px 0px 0px 0px rgba(23,19,16,0)";
 
@@ -65,7 +61,7 @@ const NO_SHADOW = "0px 0px 0px 0px rgba(23,19,16,0)";
  * the server") since there's no DOM to lay out — fall back to useEffect
  * there, where it's inert anyway. In the browser this runs synchronously
  * before paint, so a desktop visitor's correct isDesktop value lands in the
- * very first frame instead of flashing the mobile accordion for one frame
+ * very first frame instead of flashing the mobile layout for one frame
  * and then snapping to the fan-deck. */
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -101,6 +97,22 @@ function clamp01(value: number) {
   return Math.min(1, Math.max(0, value));
 }
 
+/** True while the open modal was opened by a card click on this page, i.e.
+ * there's a history entry under it to go back to. False for a deep link
+ * (?project=… loaded directly), where going back would leave the site. */
+let modalPushedHistory = false;
+
+function markModalPushed() {
+  modalPushedHistory = true;
+}
+
+/** Reads and clears the flag in one step. */
+function takeModalPushed() {
+  const pushed = modalPushedHistory;
+  modalPushedHistory = false;
+  return pushed;
+}
+
 /**
  * Reads the ?project= query param and resolves the open modal from it.
  * Isolated behind Suspense because useSearchParams forces client-side
@@ -115,8 +127,15 @@ function ProjectModalGate() {
   const openProjectId = searchParams.get("project");
   const openProject = PROJECTS.find((project) => project.id === openProjectId) ?? null;
 
+  // Closing undoes the open rather than stacking a new entry on top of it,
+  // so browser Back afterwards goes where the visitor expects instead of
+  // reopening the modal they just closed.
   function close() {
-    router.push(pathname, { scroll: false });
+    if (takeModalPushed()) {
+      router.back();
+    } else {
+      router.replace(pathname, { scroll: false });
+    }
   }
 
   return <ProjectModal project={openProject} onClose={close} />;
@@ -124,38 +143,30 @@ function ProjectModalGate() {
 
 /** `flat` is true once the card sits fully spread — either the fan deck has
  * been opened, or there's no deck at all below the desktop breakpoint — as
- * opposed to collapsed behind the fanned deck, where only a sliver shows.
- *
- * `expanded` is the separate mobile-only accordion state: when false, the
- * body (description/tags/read-link) is unmounted rather than just visually
- * covered, since — unlike the fan deck's peek-behind-the-stack illusion —
- * a mobile list has nothing to hide a full card behind. Defaults to true so
- * desktop call sites (which never pass it) are unaffected. */
+ * opposed to collapsed behind the fanned deck, where only a sliver shows. */
 function ProjectCard({
   project,
   onOpen,
   flat,
-  expanded = true,
   isDesktop,
 }: {
   project: Project;
   onOpen?: () => void;
   flat: boolean;
-  expanded?: boolean;
   isDesktop: boolean;
 }) {
   const icon = project.techIcons[0];
   const prefersReducedMotion = useReducedMotion();
   const canHover = useCanHover();
   // Only a fully spread desktop card tilts — never the fanned deck (its own
-  // x/y/rotate animation lives on the parent) or the mobile accordion.
+  // x/y/rotate animation lives on the parent) or the mobile list.
   const tiltEnabled = isDesktop && flat && canHover && !prefersReducedMotion;
   // Same hover-capable-pointer check the tilt uses, minus the reduced-motion
   // condition: the extra detail is content, so it still reveals for those
   // users — it just fades in place instead of sliding up.
   const hoverDetail = isDesktop && flat && canHover;
-  // Desktop spread cards carry the fuller baseline; the mobile accordion's
-  // expanded row deliberately keeps the leaner one it has today.
+  // Desktop spread cards carry the fuller baseline; mobile rows keep the
+  // leaner one so the tap hint never truncates on a narrow card.
   const richBaseline = isDesktop && flat;
   const pointerTracking = tiltEnabled || hoverDetail;
 
@@ -218,7 +229,6 @@ function ProjectCard({
         hoverShadow={CARD_SHADOW}
         style={{
           ...(!isDesktop ? { background: "transparent", boxShadow: CARD_SHADOW } : {}),
-          ...(!expanded ? { borderColor: "var(--accordion-border)" } : {}),
         }}
       >
         <div className="flex items-center justify-between gap-3">
@@ -255,50 +265,39 @@ function ProjectCard({
           {project.title}
         </h3>
 
-        <AnimatePresence initial={false}>
-          {expanded && (
-            <motion.div
-              key="body"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="flex flex-1 flex-col overflow-hidden"
-            >
-              <p className="mb-[22px] text-caption leading-caption tracking-caption text-pretty" style={{ color: "var(--muted)" }}>
-                {project.description}
-              </p>
+        <div className="flex flex-1 flex-col">
+          <p className="mb-[22px] text-caption leading-caption tracking-caption text-pretty" style={{ color: "var(--muted)" }}>
+            {project.description}
+          </p>
 
-              <div className="flex-1" />
+          <div className="flex-1" />
 
-              <div className="mb-4 flex flex-wrap gap-1.5">
-                {project.tags.map((tag) => (
-                  <Badge key={tag} variant="tag">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+          <div className="mb-4 flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <Badge key={tag} variant="tag">
+                {tag}
+              </Badge>
+            ))}
+          </div>
 
-              <div
-                className="flex items-center justify-between gap-3 border-t-2 pt-3.5 text-label leading-label uppercase tracking-label"
-                style={{ borderColor: "var(--rule)", color: "var(--accent)" }}
-              >
-                {/* Shares the row rather than adding one: a second line would
-                    make a spread card taller than a fanned one, which moves
-                    every section below it on stack/spread. */}
-                {richBaseline && (
-                  <span className="truncate whitespace-nowrap" style={{ color: "var(--faint)" }}>
-                    {project.whatBroke.length} broke · {project.decisions.length}{" "}
-                    {project.decisions.length === 1 ? "decision" : "decisions"}
-                  </span>
-                )}
-                {/* Purely decorative — the whole card is already the click
-                    target (see onOpen above), this is just the hint. */}
-                <span className="ml-auto whitespace-nowrap">Tap to read →</span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          <div
+            className="flex items-center justify-between gap-3 border-t-2 pt-3.5 text-label leading-label uppercase tracking-label"
+            style={{ borderColor: "var(--rule)", color: "var(--accent)" }}
+          >
+            {/* Shares the row rather than adding one: a second line would
+                make a spread card taller than a fanned one, which moves
+                every section below it on stack/spread. */}
+            {richBaseline && (
+              <span className="truncate whitespace-nowrap" style={{ color: "var(--faint)" }}>
+                {project.whatBroke.length} broke · {project.decisions.length}{" "}
+                {project.decisions.length === 1 ? "decision" : "decisions"}
+              </span>
+            )}
+            {/* Purely decorative — the whole card is already the click
+                target (see onOpen above), this is just the hint. */}
+            <span className="ml-auto whitespace-nowrap">{isDesktop ? "Read the detail →" : "Tap to read →"}</span>
+          </div>
+        </div>
 
         {hoverDetail && (
           <motion.div
@@ -339,15 +338,10 @@ export function Projects() {
   const router = useRouter();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [deckOpen, setDeckOpen] = useState(false);
-  // Mobile-only accordion: which card (if any) is expanded. Independent of
-  // deckOpen — the desktop fan/spread state doesn't exist below the
-  // breakpoint, and this doesn't exist above it.
-  const [openCardId, setOpenCardId] = useState<string | null>(null);
-  // Shakes the toggle to draw a first-time visitor's eye to it; stops for
-  // good the moment they've actually used it once.
-  const [hasToggled, setHasToggled] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
+  // Opens spread: the work is the point of the page, so every card is
+  // readable and focusable from the first paint. Stacking into the fan is
+  // the optional flourish, not a gate in front of the projects.
+  const [deckOpen, setDeckOpen] = useState(true);
 
   useIsomorphicLayoutEffect(() => {
     const query = window.matchMedia(DECK_MEDIA_QUERY);
@@ -355,7 +349,7 @@ export function Projects() {
     // all can only be decided once mounted — same pattern as CursorField.
     // Runs as a layout effect (not a plain effect) specifically so this
     // resolves before the browser paints, instead of flashing the mobile
-    // accordion for one frame on desktop.
+    // layout for one frame on desktop.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsDesktop(query.matches);
 
@@ -371,18 +365,8 @@ export function Projects() {
   const fanned = isDesktop && !deckOpen;
 
   function openProject(id: string) {
+    markModalPushed();
     router.push(`?project=${encodeURIComponent(id)}`, { scroll: false });
-  }
-
-  // Mobile-only tap handler: first tap on a card expands it (collapsing
-  // whatever else was open); tapping the card that's already expanded opens
-  // the detail modal instead of collapsing it back.
-  function handleAccordionTap(id: string) {
-    if (openCardId === id) {
-      openProject(id);
-    } else {
-      setOpenCardId(id);
-    }
   }
 
   function handleDeckKeyDown(e: KeyboardEvent<HTMLDivElement>) {
@@ -409,28 +393,23 @@ export function Projects() {
           className="font-text text-small leading-small tracking-small text-pretty lg:col-start-10 lg:col-span-3 lg:self-end"
           style={{ color: "var(--muted)" }}
         >
-          Click any card to see the technical detail: the problem, the decisions, the parts that broke.
+          Open any card to see the technical detail: the problem, the decisions, the parts that broke.
         </p>
       </div>
 
       {isDesktop && (
         <div className="mb-3.5 flex justify-end">
-          <motion.button
+          <button
             ref={toggleRef}
             type="button"
-            onClick={() => {
-              setDeckOpen((open) => !open);
-              setHasToggled(true);
-            }}
+            onClick={() => setDeckOpen((open) => !open)}
             aria-expanded={deckOpen}
             aria-controls="work-deck"
-            animate={!hasToggled && !prefersReducedMotion ? { x: [0, -4, 4, -4, 4, 0] } : { x: 0 }}
-            transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3.5, ease: "easeInOut" }}
             className="inline-flex min-h-11 items-center border px-3.5 text-ui leading-ui font-semibold uppercase tracking-ui whitespace-nowrap transition-colors duration-300 hover:border-[var(--ink)] hover:bg-[var(--wash)] hover:text-ink"
             style={{ borderColor: "var(--chip)", color: "var(--body)" }}
           >
             {deckOpen ? "Stack cards" : "Spread cards"}
-          </motion.button>
+          </button>
         </div>
       )}
 
@@ -459,11 +438,10 @@ export function Projects() {
           >
             {PROJECTS.map((project, i) => {
               const fromCenter = i - (PROJECTS.length - 1) / 2;
-              const mobileExpanded = openCardId === project.id;
-              // Mobile has no fan/spread state of its own — flat mirrors the
-              // desktop spread look when a card is the open accordion row,
-              // and drops to the single-icon sliver style otherwise.
-              const flat = isDesktop ? !fanned : mobileExpanded;
+              // Below the breakpoint every card shows in full — description,
+              // tags, icon row — so projects can be compared at a glance, and
+              // one tap opens its detail.
+              const flat = isDesktop ? !fanned : true;
               return (
                 <motion.div
                   key={project.id}
@@ -486,15 +464,8 @@ export function Projects() {
                 >
                   <ProjectCard
                     project={project}
-                    onOpen={
-                      fanned
-                        ? undefined
-                        : isDesktop
-                          ? () => openProject(project.id)
-                          : () => handleAccordionTap(project.id)
-                    }
+                    onOpen={fanned ? undefined : () => openProject(project.id)}
                     flat={flat}
-                    expanded={isDesktop || mobileExpanded}
                     isDesktop={isDesktop}
                   />
                 </motion.div>

@@ -126,7 +126,7 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="flex h-[34px] w-[34px] items-center justify-center transition-colors duration-300 hover:text-ink"
+        className="flex h-11 w-11 items-center justify-center transition-colors duration-300 hover:text-ink"
         style={{ color: "var(--muted)" }}
       >
         <MenuIcon open={open} />
@@ -153,12 +153,12 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
                 className="fixed inset-0 z-50 flex flex-col"
                 style={{ background: "var(--nav-scrim)" }}
               >
-                <div className="flex justify-end px-[clamp(24px,4.5vw,64px)] py-[26px]">
+                <div className="flex justify-end px-[clamp(24px,4.5vw,64px)] py-[10px]">
                   <button
                     type="button"
                     onClick={close}
                     aria-label="Close menu"
-                    className="flex h-[34px] w-[34px] items-center justify-center text-ink transition-colors duration-300 hover:text-accent"
+                    className="flex h-11 w-11 items-center justify-center text-ink transition-colors duration-300 hover:text-accent"
                   >
                     <MenuIcon open />
                   </button>

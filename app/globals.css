@@ -91,7 +91,6 @@
   --wash: rgba(32, 30, 29, 0.07);
   --accent: #ae1800;
   --card: #eae9e9;
-  --accordion-border: rgba(32, 30, 29, 0.4);
 
   /* Cursor glare on spread project cards (components/Projects.tsx). A white
      glare blended with soft-light reads well against the dark theme's --card
@@ -100,20 +99,6 @@
   --glare-core: rgba(174, 24, 0, 0.16);
   --glare-edge: rgba(174, 24, 0, 0);
   --glare-blend: normal;
-
-  /* One accent per word in the hero's FlipWord cycle (components/FlipWord.tsx,
-     components/Hero.tsx) — distinct hues, each tuned dark enough to read on
-     --paper in light mode (see the [data-theme="dark"] block below for the
-     lightened dark-mode counterparts). */
-  --flip-1: #b8452e; /* Money */
-  --flip-2: #2f7a4a; /* Inventory */
-  --flip-3: #2a5d9f; /* Operations */
-  --flip-4: #7a4fa8; /* Internal Admin Tools */
-  --flip-5: #a13d6b; /* Customer Support */
-  --flip-6: #97711b; /* Internal Analytics */
-  --flip-7: #1f7a72; /* Billing & Invoicing */
-  --flip-8: #3c4fa0; /* Vendor & Supply Portals */
-  --flip-9: #55606e; /* Messaging Pipelines */
 
   --inv-paper: #201e1d;
   --inv-ink: #f3f2f2;
@@ -141,25 +126,12 @@
   --wash: rgba(243, 242, 242, 0.07);
   --accent: #ff563c;
   --card: #22201f;
-  --accordion-border: rgba(243, 242, 242, 0.3);
 
   /* Light-mode counterparts above; white soft-light is the treatment this
      theme's dark --card was tuned for. */
   --glare-core: rgba(255, 255, 255, 0.55);
   --glare-edge: rgba(255, 255, 255, 0);
   --glare-blend: soft-light;
-
-  /* Lightened counterparts of the light-mode --flip-* hues above, tuned to
-     read on --paper in dark mode. */
-  --flip-1: #e2734f;
-  --flip-2: #6fcf8f;
-  --flip-3: #6ea8e6;
-  --flip-4: #b98ce8;
-  --flip-5: #e585ac;
-  --flip-6: #d6b24a;
-  --flip-7: #5ccdc0;
-  --flip-8: #93a3ea;
-  --flip-9: #a9b4c2;
 
   --inv-paper: #211f1e;
   --inv-ink: #f3f2f2;
@@ -194,6 +166,20 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* The header is sticky below md (components/Nav.tsx), so in-page anchor
+   jumps (#work, #contact…) stop just under it instead of behind it. */
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+}
+
 body {
   margin: 0;
   background: var(--paper);
@@ -223,6 +209,14 @@ a {
 /* Single-color (near-black) logo marks need inverting to stay visible on a
    dark background; multi-color brand marks are left alone. */
 [data-theme="dark"] img[data-mono] {
+  filter: invert(1);
+}
+
+/* The cursor field is a fixed layer, so it never inherits [data-inverse].
+   Once it's resting (Notes onward, all dark inverse surfaces) the light
+   theme's near-black marks would vanish into them — flip them the same way
+   dark mode does. */
+[data-theme="light"] [data-field-resting] img[data-mono] {
   filter: invert(1);
 }
 

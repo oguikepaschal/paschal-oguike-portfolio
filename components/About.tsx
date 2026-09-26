@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { GlassScrim } from "@/components/ui/GlassScrim";
 import { SectionHeadline } from "@/components/ui/SectionHeadline";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
@@ -11,27 +9,19 @@ const PARAGRAPHS = [
 
 export function About() {
   return (
-    <section id="about" className="relative overflow-hidden px-[clamp(24px,4.5vw,64px)] py-[clamp(56px,8vw,128px)]">
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <Image
-          src="/images/kratos-thor-hero-bg.png"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-contain opacity-20"
-        />
-      </div>
-
-      <div className="relative mb-[clamp(40px,5vw,64px)] grid grid-cols-1 gap-x-6 gap-y-3 lg:grid-cols-12">
+    <section id="about" className="px-[clamp(24px,4.5vw,64px)] py-[clamp(56px,8vw,128px)]">
+      <div className="mb-[clamp(40px,5vw,64px)] grid grid-cols-1 gap-x-6 gap-y-3 lg:grid-cols-12">
         <SectionLabel className="lg:col-span-2 lg:col-start-1">About me</SectionLabel>
         <SectionHeadline className="lg:col-start-3 lg:col-span-9 lg:self-end">
           I build the systems businesses run on.
         </SectionHeadline>
       </div>
 
-      <div className="relative z-[21] mx-auto max-w-[80ch] p-[18px]">
-        <GlassScrim blur={5} tint={22} />
-        <div className="relative flex flex-col gap-6 text-center">
+      {/* Left-aligned under the headline's own column at a reading measure,
+          on the plain page surface. z-[21] keeps the copy above the
+          CursorField layer (z-20) so drifting icons pass behind it. */}
+      <div className="relative z-[21] grid grid-cols-1 gap-x-6 lg:grid-cols-12">
+        <div className="flex max-w-[65ch] flex-col gap-6 lg:col-start-3 lg:col-span-8">
           {PARAGRAPHS.map((paragraph, i) => (
             <p key={i} className="font-text m-0 text-body leading-body tracking-body text-pretty" style={{ color: "var(--body)" }}>
               {paragraph}
