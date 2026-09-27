@@ -26,6 +26,8 @@ export interface Project {
   /** Public URL, when there is one. Omitted for private or unlaunched
    * deployments, so the modal never shows a link that goes nowhere. */
   liveSiteHref?: string;
+  /** Public GitHub repo. Omitted when the codebase is private. */
+  repoHref?: string;
   /** 16:9 screenshot filling the modal's header. Omitted projects keep the
    * blank placeholder until a photo is added. */
   image?: { src: string; alt: string };
@@ -77,6 +79,7 @@ export const PROJECTS: Project[] = [
     status: "In progress",
     tone: "muted",
     title: "Meridian Freight",
+    repoHref: "https://github.com/oguikepaschal/freight-platform",
     description: "Three apps, one shared backend, kept in sync.",
     tags: ["Next.js", "TypeScript", "Neon Postgres", "Drizzle ORM", "Auth.js v5", "Turborepo"],
     tagline:
@@ -109,6 +112,7 @@ export const PROJECTS: Project[] = [
     status: "Not adopted",
     tone: "muted",
     title: "Polanco Ops Hub",
+    repoHref: "https://github.com/oguikepaschal/polanco-ops",
     description: "Inventory and CRM built around how the team already works.",
     tags: ["React", "Node.js", "WhatsApp API", "Tailwind", "Supabase"],
     tagline:
@@ -144,6 +148,7 @@ export const PROJECTS: Project[] = [
     status: "Live",
     tone: "accent",
     title: "Stonebridge Builders",
+    repoHref: "https://github.com/oguikepaschal/stonebridge-builders",
     description: "A CMS that lives in git, not a subscription.",
     tags: ["Cloudinary", "CSS", "Netlify", "Git"],
     tagline:

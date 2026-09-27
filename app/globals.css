@@ -220,20 +220,6 @@ a {
   filter: invert(1);
 }
 
-/* Skills grid slots are empty by design — CursorField flies the only copy of
-   each icon into them. Visitors who never get that field fall back to a static
-   icon in the slot, under exactly the conditions that switch the field off in
-   components/CursorField.tsx. */
-.skill-slot-fallback {
-  display: none;
-}
-
-@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
-  .skill-slot-fallback {
-    display: block;
-  }
-}
-
 /* Direction C: Archivo condensed on its width axis carries display/heading/
    brand roles (paired with `uppercase` at each call site, except the email
    role which stays mixed-case) — the sans stack set on body is the same
@@ -250,6 +236,12 @@ a {
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }
 
+/* Bodoni Moda italic, used only for the four category names in the skills
+   index (components/SkillsMatrix.tsx). */
+.font-category {
+  font-family: var(--font-category), "Times New Roman", serif;
+}
+
 .font-signature {
   font-family: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
 }
@@ -259,24 +251,4 @@ a {
    which an inline mixBlendMode string can't do. */
 .card-glare {
   mix-blend-mode: var(--glare-blend);
-}
-
-/* Mobile skills strip (components/SkillsMatrix.tsx): each card sets --chase
-   from how far it sits off-centre while the strip scrolls, and the icons
-   trail that offset and ease back as the card lands — the touch-device
-   stand-in for the cursor field, which never runs on coarse pointers. Scoped
-   to the strip's own breakpoint so the desktop grid, where CursorField docks
-   real icons into these same slots, is untouched. */
-@media (max-width: 639px) {
-  .skill-chase {
-    transform: translate3d(var(--chase, 0px), 0, 0);
-    transition: transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-}
-
-@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
-  .skill-chase {
-    transform: none;
-    transition: none;
-  }
 }

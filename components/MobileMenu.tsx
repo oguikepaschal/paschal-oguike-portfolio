@@ -41,9 +41,11 @@ const LIST_VARIANTS = {
   visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } },
 };
 
+/** Position only, never opacity: every link is readable the moment the
+ * panel is, and the stagger is just a settle into place. */
 const ITEM_VARIANTS = {
-  hidden: { opacity: 0, y: -10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: cubicBezier(0.4, 0, 0.2, 1) } },
+  hidden: { y: -10 },
+  visible: { y: 0, transition: { duration: 0.3, ease: cubicBezier(0.4, 0, 0.2, 1) } },
 };
 
 /** Radial reveal from the hamburger's corner (top-right). 150% comfortably
@@ -172,7 +174,7 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
                     className="flex flex-col items-center gap-6 text-center"
                   >
                     {links.map((link, i) => (
-                      <motion.li key={link.href} variants={ITEM_VARIANTS}>
+                      <motion.li key={link.href} variants={reducedMotion ? undefined : ITEM_VARIANTS}>
                         <a
                           ref={i === 0 ? firstLinkRef : undefined}
                           href={link.href}
@@ -187,7 +189,7 @@ export function MobileMenu({ links }: { links: NavLink[] }) {
                 </nav>
 
                 <motion.div
-                  variants={ITEM_VARIANTS}
+                  variants={reducedMotion ? undefined : ITEM_VARIANTS}
                   initial="hidden"
                   animate="visible"
                   className="flex justify-center pb-9"

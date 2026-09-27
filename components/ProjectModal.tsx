@@ -209,13 +209,26 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   ))}
                 </div>
                 <div className="flex flex-wrap items-center gap-4">
-                  <span
-                    className="inline-flex items-center gap-2 text-label leading-label uppercase tracking-label"
-                    style={{ color: "var(--muted)" }}
-                  >
-                    <img src="https://cdn.simpleicons.org/github/8a8177" alt="" width={13} height={13} className="block" />
-                    Codebase is private
-                  </span>
+                  {project.repoHref ? (
+                    <a
+                      href={project.repoHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-label leading-label uppercase tracking-label"
+                      style={{ color: "var(--accent)" }}
+                    >
+                      <img src="https://cdn.simpleicons.org/github/8a8177" alt="" width={13} height={13} className="block" />
+                      View code on GitHub
+                    </a>
+                  ) : (
+                    <span
+                      className="inline-flex items-center gap-2 text-label leading-label uppercase tracking-label"
+                      style={{ color: "var(--muted)" }}
+                    >
+                      <img src="https://cdn.simpleicons.org/github/8a8177" alt="" width={13} height={13} className="block" />
+                      Codebase is private
+                    </span>
+                  )}
                   {project.liveSiteHref && (
                     <a
                       href={project.liveSiteHref}
@@ -224,7 +237,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                       className="text-label leading-label uppercase tracking-label"
                       style={{ color: "var(--accent)" }}
                     >
-                      View live site →
+                      View live site
                     </a>
                   )}
                 </div>

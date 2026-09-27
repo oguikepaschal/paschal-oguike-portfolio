@@ -82,6 +82,15 @@ export function Footer() {
         >
           Email
         </a>
+        <a
+          href="https://github.com/oguikepaschal/paschal-oguike-portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-colors duration-300 hover:text-ink"
+          style={{ color: "var(--faint)" }}
+        >
+          Source for this site
+        </a>
         <a href="#top" className="transition-colors duration-300 hover:text-ink" style={{ color: "var(--faint)" }}>
           Back to top
         </a>

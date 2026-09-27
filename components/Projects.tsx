@@ -29,11 +29,9 @@ import { TechIconRow } from "@/components/ui/TechIconRow";
 import { ProjectModal } from "@/components/ProjectModal";
 import { PROJECTS, type Project } from "@/lib/projects-data";
 
-/** Tailwind's `xl` — matches the grid's own `xl:grid-cols-4` below (the fan
- * math assumes a single 4-up row, so this must always match whatever
- * breakpoint actually produces one). Previously `lg`/64rem, which fanned the
- * deck a full 128px before the grid had 4 columns, spreading cards across a
- * still-2-column grid in between. */
+/** Tailwind's `xl`. At and above it the grid lays every project out in one
+ * row (see --project-count on the deck below), which is what the fan math
+ * assumes; below it the grid wraps to 1-2 columns and there is no deck. */
 const DECK_MEDIA_QUERY = "(min-width: 80rem)";
 /** Same overdamped feel as CursorField's dock flight, a touch quicker since
  * the distances here are a card width rather than the whole viewport. */
@@ -295,7 +293,7 @@ function ProjectCard({
             )}
             {/* Purely decorative — the whole card is already the click
                 target (see onOpen above), this is just the hint. */}
-            <span className="ml-auto whitespace-nowrap">{isDesktop ? "Read the detail →" : "Tap to read →"}</span>
+            <span className="ml-auto whitespace-nowrap">{isDesktop ? "Read the detail" : "Tap to read"}</span>
           </div>
         </div>
 
@@ -317,7 +315,7 @@ function ProjectCard({
               className="mt-3 border-t-2 pt-3 text-label leading-label uppercase tracking-label"
               style={{ borderColor: "var(--rule)", color: "var(--accent)" }}
             >
-              Read the detail →
+              Read the detail
             </div>
           </motion.div>
         )}
@@ -427,12 +425,18 @@ export function Projects() {
             // Reserved in both states, not just while fanned: toggling it
             // changed the section's height by FAN_RESERVE on every stack/
             // spread, shoving every section below up and down.
-            style={{ paddingBottom: isDesktop ? FAN_RESERVE : 0 }}
+            // One column per project at xl, from the data rather than a
+            // hardcoded count, so adding or removing a project never leaves
+            // an orphaned card or breaks the single-row fan.
+            style={{
+              paddingBottom: isDesktop ? FAN_RESERVE : 0,
+              ["--project-count" as string]: PROJECTS.length,
+            }}
             // While fanned the whole deck is one "spread" target; once spread,
             // clicks belong to the individual cards and closing is explicit.
             onClick={fanned ? () => setDeckOpen(true) : undefined}
             onKeyDown={isDesktop ? handleDeckKeyDown : undefined}
-            className={`relative grid grid-cols-1 gap-[18px] sm:grid-cols-2 xl:grid-cols-4 ${
+            className={`relative grid grid-cols-1 gap-[18px] sm:grid-cols-2 xl:grid-cols-[repeat(var(--project-count),minmax(0,1fr))] ${
               fanned ? "cursor-pointer" : ""
             }`}
           >

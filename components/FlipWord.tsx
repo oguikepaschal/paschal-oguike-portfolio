@@ -78,15 +78,16 @@ export function FlipWord({ words, intervalMs = 2200, colors }: FlipWordProps) {
     };
   }, []);
 
-  // Loops while visible and not hovered. Reduced motion never cycles and just
-  // shows the first word.
+  // Loops while visible and not hovered. Reduced motion still cycles through
+  // every word (it removes motion, never content); the words just swap in
+  // place instead of sliding.
   useEffect(() => {
-    if (words.length <= 1 || reducedMotion || !inView || hovered) return;
+    if (words.length <= 1 || !inView || hovered) return;
     const id = setInterval(() => {
       setActiveIndex((i) => (i + 1) % words.length);
     }, intervalMs);
     return () => clearInterval(id);
-  }, [words.length, intervalMs, reducedMotion, inView, hovered]);
+  }, [words.length, intervalMs, inView, hovered]);
 
   const longestWord = words.reduce((longest, word) => (word.length > longest.length ? word : longest), "");
   const word = words[activeIndex];
