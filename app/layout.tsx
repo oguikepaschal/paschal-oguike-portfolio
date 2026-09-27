@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
+import { Archivo, Bodoni_Moda, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import Script from "next/script";
 import { CursorField } from "@/components/CursorField";
 import { Nav } from "@/components/Nav";
@@ -22,6 +22,14 @@ const sourceSerif4 = Source_Serif_4({
   style: ["normal", "italic"],
   axes: ["opsz"],
   variable: "--font-serif",
+});
+
+// Only the skills index's category names use this — italic, one weight.
+const bodoniModa = Bodoni_Moda({
+  subsets: ["latin"],
+  style: ["italic"],
+  weight: ["400"],
+  variable: "--font-category",
 });
 
 const jetBrainsMono = JetBrains_Mono({
@@ -54,7 +62,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${sourceSerif4.variable} ${jetBrainsMono.variable}`}
+      className={`${archivo.variable} ${sourceSerif4.variable} ${bodoniModa.variable} ${jetBrainsMono.variable}`}
       // The beforeInteractive script below sets data-theme before hydration
       // to avoid a flash of the wrong theme; that intentionally differs from
       // the server-rendered markup, which doesn't know the client's theme.
