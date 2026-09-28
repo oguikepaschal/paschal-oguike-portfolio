@@ -116,22 +116,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               </button>
             </div>
 
-            {/* No screenshot yet (e.g. a project still in progress): skip the
-                media block entirely rather than opening on an empty slab. */}
-            {project.image && (
-              <div className="relative border-b-2" style={{ borderColor: "var(--rule)" }}>
-                <div className="relative aspect-video w-full overflow-hidden" style={{ background: "var(--wash)" }}>
-                  <Image
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    fill
-                    sizes="(min-width: 1000px) 920px, 100vw"
-                    className="object-cover object-top"
-                  />
-                </div>
-              </div>
-            )}
-
             <div className="p-[clamp(24px,3.4vw,44px)]">
               <div className="flex items-center gap-3.5 text-label leading-label uppercase tracking-label" style={{ color: "var(--muted)" }}>
                 <span style={{ color: "var(--accent)" }}>{project.number}</span>
@@ -184,6 +168,31 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   ))}
                 </ul>
               </div>
+
+              {project.images && project.images.length > 0 && (
+                <div
+                  className="flex flex-col gap-[clamp(24px,3vw,40px)] border-t-2 pt-10"
+                  style={{ borderColor: "var(--rule)" }}
+                >
+                  {project.images.map((img) => (
+                    <figure key={img.alt} className="m-0">
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        placeholder="blur"
+                        loading="lazy"
+                        sizes="(min-width: 1024px) 840px, calc(100vw - 96px)"
+                        className="h-auto w-full"
+                      />
+                      {img.caption && (
+                        <figcaption className="mt-2.5 text-caption leading-caption tracking-caption" style={{ color: "var(--muted)" }}>
+                          {img.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              )}
 
               <div
                 className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t-2 pt-5"

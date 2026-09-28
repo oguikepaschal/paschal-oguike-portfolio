@@ -1,4 +1,21 @@
+import type { StaticImageData } from "next/image";
 import { ORIGINAL_ICON_SRC } from "@/lib/skills";
+import sterling01 from "@/assets/projects/sterling-capital/01.png";
+import sterling02 from "@/assets/projects/sterling-capital/02.png";
+import sterling03 from "@/assets/projects/sterling-capital/03.png";
+import sterling04 from "@/assets/projects/sterling-capital/04.png";
+import sterling05 from "@/assets/projects/sterling-capital/05.png";
+import meridian01 from "@/assets/projects/meridian-heights/01.png";
+import meridian02 from "@/assets/projects/meridian-heights/02.png";
+import meridian03 from "@/assets/projects/meridian-heights/03.png";
+import polanco01 from "@/assets/projects/polanco-ops-hub/01.png";
+import polanco02 from "@/assets/projects/polanco-ops-hub/02.png";
+import polanco03 from "@/assets/projects/polanco-ops-hub/03.png";
+import polanco04 from "@/assets/projects/polanco-ops-hub/04.png";
+import polanco05 from "@/assets/projects/polanco-ops-hub/05.png";
+import stonebridge01 from "@/assets/projects/stonebridge-builders/01.png";
+import stonebridge02 from "@/assets/projects/stonebridge-builders/02.png";
+import stonebridge03 from "@/assets/projects/stonebridge-builders/03.png";
 
 export interface ProjectTechIcon {
   label: string;
@@ -15,8 +32,6 @@ export interface Project {
   title: string;
   /** One-line summary shown on the card. */
   description: string;
-  /** Tech tag badges shown on the card. */
-  tags: string[];
   /** Italic intro paragraph shown at the top of the modal. */
   tagline: string;
   problem: string;
@@ -28,9 +43,18 @@ export interface Project {
   liveSiteHref?: string;
   /** Public GitHub repo. Omitted when the codebase is private. */
   repoHref?: string;
-  /** 16:9 screenshot filling the modal's header. Omitted projects keep the
-   * blank placeholder until a photo is added. */
+  /** 16:9 cover illustration shown on the project card. Omitted projects
+   * render the card without a cover. */
   image?: { src: string; alt: string };
+  /** Ordered screenshot gallery shown in the modal after the case study
+   * text. Omitted projects render without a gallery. */
+  images?: {
+    src: StaticImageData;
+    alt: string;
+    /** Short visible note under the screenshot, e.g. that the people shown
+     * are sample data. */
+    caption?: string;
+  }[];
 }
 
 const ICONS = "https://cdn.simpleicons.org";
@@ -43,7 +67,6 @@ export const PROJECTS: Project[] = [
     tone: "accent",
     title: "Sterling Capital Exchange",
     description: "A simulated trading platform built to actually hold up.",
-    tags: ["Next.js", "Supabase", "Sentry", "Cloudflare", "TypeScript", "Railway"],
     tagline:
       "Spot, forex and binary options all simulated but functioning like the real thing. The interface was the easy part. Getting price feeds, order matching and multi-currency wallets to behave correctly under load took most of the work.",
     problem:
@@ -71,6 +94,28 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/sterling-capital-v2.jpeg",
       alt: "Sterling Capital Exchange homepage with a live BTC/USD trading terminal",
     },
+    images: [
+      {
+        src: sterling01,
+        alt: "Sterling Capital marketing homepage with hero copy and a floating BTC/USD terminal widget",
+      },
+      {
+        src: sterling02,
+        alt: "Dashboard home screen showing portfolio value, BTC/ETH/SOL market cards and a risk notice",
+      },
+      {
+        src: sterling03,
+        alt: "Spot trading view with a BTC/USDT candlestick chart, order book and market list",
+      },
+      {
+        src: sterling04,
+        alt: "Assets page listing account balances across Capital, Spot, Forex and Options, with recent activity",
+      },
+      {
+        src: sterling05,
+        alt: "Markets page showing forex pairs with live prices, daily change and trend sparklines",
+      },
+    ],
   },
   {
     id: "freight",
@@ -80,7 +125,6 @@ export const PROJECTS: Project[] = [
     title: "Meridian Freight",
     repoHref: "https://github.com/oguikepaschal/freight-platform",
     description: "Three apps, one shared backend, kept in sync.",
-    tags: ["Next.js", "TypeScript", "Neon Postgres", "Drizzle ORM", "Auth.js v5", "Turborepo"],
     tagline:
       "A freight-forwarding platform built from scratch, modeled on enterprise players in the space. Split into a public marketing site, a customer portal, and an internal admin app, all sharing one monorepo and one data layer.",
     problem:
@@ -103,6 +147,24 @@ export const PROJECTS: Project[] = [
       { label: "Auth.js v5", src: ORIGINAL_ICON_SRC.authJs, mono: true },
       { label: "Turborepo", src: `${ICONS}/turborepo` },
     ],
+    image: {
+      src: "/images/projects/meridian-heights.png",
+      alt: "Meridian Freight homepage with a container port hero and a sample shipment manifest",
+    },
+    images: [
+      {
+        src: meridian01,
+        alt: "Meridian Freight homepage hero with a sample shipment manifest and trade lane strip",
+      },
+      {
+        src: meridian02,
+        alt: "Three-step quote process, a request-a-quote banner and footer navigation",
+      },
+      {
+        src: meridian03,
+        alt: "Track shipment page with a reference number field and search button",
+      },
+    ],
   },
   {
     id: "dealership",
@@ -112,7 +174,6 @@ export const PROJECTS: Project[] = [
     title: "Polanco Ops Hub",
     repoHref: "https://github.com/oguikepaschal/polanco-ops",
     description: "Inventory and CRM built around how the team already works.",
-    tags: ["React", "Node.js", "WhatsApp API", "Tailwind", "Supabase"],
     tagline:
       "A mobile-first operations web app built on spec for a Lagos luxury car dealership with a CRM built around WhatsApp, inventory tracking and deal sheets generated automatically; designed, built and pitched entirely on my own initiative. It was never adopted but it was worth the shot.",
     problem:
@@ -139,6 +200,30 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/polanco-ops-hub.jpeg",
       alt: "Polanco Ops Hub inventory screen showing vehicle cards with availability status",
     },
+    images: [
+      {
+        src: polanco01,
+        alt: "Operations Hub sign-in screen with email and password fields",
+      },
+      {
+        src: polanco02,
+        alt: "Dashboard showing stock counts, quick actions and a recent activity feed",
+        caption: "Names shown are sample data, not real customers.",
+      },
+      {
+        src: polanco03,
+        alt: "Inventory grid of vehicle cards with prices, mileage and status tags",
+      },
+      {
+        src: polanco04,
+        alt: "Deal sheets list showing buyers, vehicles and prices in dollars and naira",
+        caption: "Names and deal figures shown are sample data, not real customers.",
+      },
+      {
+        src: polanco05,
+        alt: "Settings page with theme options, exchange rate and business details",
+      },
+    ],
   },
   {
     id: "stonebridge",
@@ -148,7 +233,6 @@ export const PROJECTS: Project[] = [
     title: "Stonebridge Builders",
     repoHref: "https://github.com/oguikepaschal/stonebridge-builders",
     description: "A CMS that lives in git, not a subscription.",
-    tags: ["Cloudinary", "CSS", "Netlify", "Git"],
     tagline:
       "Marketing site, recruiting pipeline, and content management for a general contracting company operating across Pennsylvania, North Carolina, and Illinois. Content lives in the repo, with no database and no monthly CMS cost.",
     problem: "A small contracting company editing a few pages a month doesn't need a headless CMS subscription to do it.",
@@ -171,5 +255,19 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/stonebridge.jpeg",
       alt: "Stonebridge Builders homepage hero reading “Building with Integrity. Crafted to Last.”",
     },
+    images: [
+      {
+        src: stonebridge01,
+        alt: "Stonebridge Builders homepage hero with the headline Building with Integrity",
+      },
+      {
+        src: stonebridge02,
+        alt: "Our Services grid covering design, renovation, general contracting and home repairs",
+      },
+      {
+        src: stonebridge03,
+        alt: "Contact page with an inquiry form and service area details",
+      },
+    ],
   },
 ];

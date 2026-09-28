@@ -11,6 +11,7 @@ import {
   type MouseEvent,
 } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import {
   MotionConfig,
   motion,
@@ -25,9 +26,13 @@ import { Card } from "@/components/ui/Card";
 import { GlassScrim } from "@/components/ui/GlassScrim";
 import { SectionHeadline } from "@/components/ui/SectionHeadline";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { TechIconRow } from "@/components/ui/TechIconRow";
 import { ProjectModal } from "@/components/ProjectModal";
 import { PROJECTS, type Project } from "@/lib/projects-data";
+
+/** Card cover fills one grid column, so its sizes hint tracks the deck's
+ * column count at xl and the grid's column count below it, rather than a
+ * fixed width. */
+const CARD_COVER_SIZES = `(min-width: 1280px) ${Math.round(100 / PROJECTS.length)}vw, (min-width: 640px) 50vw, 100vw`;
 
 /** Tailwind's `xl`. At and above it the grid lays every project out in one
  * row (see --project-count on the deck below), which is what the fan math
@@ -153,7 +158,6 @@ function ProjectCard({
   flat: boolean;
   isDesktop: boolean;
 }) {
-  const icon = project.techIcons[0];
   const prefersReducedMotion = useReducedMotion();
   const canHover = useCanHover();
   // Only a fully spread desktop card tilts — never the fanned deck (its own
@@ -229,39 +233,37 @@ function ProjectCard({
           ...(!isDesktop ? { background: "transparent", boxShadow: CARD_SHADOW } : {}),
         }}
       >
-        <div className="flex items-center justify-between gap-3">
-          <span className="flex min-w-0 flex-1 items-center gap-2.5">
-            <span className="shrink-0 text-caption leading-caption tracking-caption tabular-nums" style={{ color: "var(--accent)" }}>
-              {project.number}
-            </span>
-            {flat ? (
-              <TechIconRow icons={project.techIcons} />
-            ) : (
-              icon && (
-                <img
-                  src={icon.src}
-                  alt={icon.label}
-                  title={icon.label}
-                  data-mono={icon.mono ? "" : undefined}
-                  width={14}
-                  height={14}
-                  className="block shrink-0"
-                />
-              )
-            )}
-          </span>
-          <Badge tone={project.tone} border={project.status !== "Live"}>
-            {project.status}
-          </Badge>
-        </div>
+        {project.image && (
+          <div className="relative -mx-[22px] -mt-[22px] mb-5 aspect-video w-[calc(100%+44px)] overflow-hidden">
+            <Image
+              src={project.image.src}
+              alt={project.image.alt}
+              fill
+              sizes={CARD_COVER_SIZES}
+              className="object-cover object-top"
+            />
+          </div>
+        )}
 
         <h3
-          className={`font-display mt-5 mb-2 text-title leading-title font-bold uppercase tracking-title ${
+          className={`font-display mb-2 text-title leading-title font-bold uppercase tracking-title ${
             flat ? "text-center" : ""
           }`}
         >
           {project.title}
         </h3>
+
+        <div className="mb-[22px] flex items-center justify-between gap-3">
+          <span
+            className="shrink-0 text-caption leading-caption tracking-caption tabular-nums"
+            style={{ color: "var(--accent)" }}
+          >
+            {project.number}
+          </span>
+          <Badge tone={project.tone} border={project.status !== "Live"}>
+            {project.status}
+          </Badge>
+        </div>
 
         <div className="flex flex-1 flex-col">
           <p className="mb-[22px] text-caption leading-caption tracking-caption text-pretty" style={{ color: "var(--muted)" }}>
@@ -269,14 +271,6 @@ function ProjectCard({
           </p>
 
           <div className="flex-1" />
-
-          <div className="mb-4 flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <Badge key={tag} variant="tag">
-                {tag}
-              </Badge>
-            ))}
-          </div>
 
           <div
             className="flex items-center justify-between gap-3 border-t-2 pt-3.5 text-label leading-label uppercase tracking-label"
