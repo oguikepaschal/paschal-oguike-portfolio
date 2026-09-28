@@ -16,7 +16,7 @@ export function Contact() {
             Technical skills) — SectionLabel picks up the inverted --muted
             from this section's own data-inverse palette. */}
         <div className="mb-[clamp(40px,5vw,64px)] grid grid-cols-1 gap-x-6 gap-y-3 lg:grid-cols-12">
-          <SectionLabel className="lg:col-span-2 lg:col-start-1">Lets talk</SectionLabel>
+          <SectionLabel className="lg:col-span-2 lg:col-start-1">Contact</SectionLabel>
         </div>
 
         <div className="mt-6 flex flex-col items-end text-right">

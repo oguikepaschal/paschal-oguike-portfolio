@@ -46,7 +46,7 @@ export function Hero() {
           even, symmetrical pair; the text leads, the photo trails and lands
           lower, which is the asymmetry this layout is going for. */}
       <div className="flex flex-col gap-y-7 lg:col-start-6 lg:col-span-6 lg:row-start-1 lg:row-span-2 lg:self-start">
-        <p className="font-text m-0 text-lead leading-lead tracking-lead" style={{ color: "var(--body)" }}>
+        <p className="font-text m-0 text-right text-lead leading-lead tracking-lead" style={{ color: "var(--body)" }}>
           Hi, my name is Paschal
         </p>
 
@@ -64,10 +64,8 @@ export function Hero() {
           className="font-text block text-lead leading-lead tracking-lead text-pretty max-w-[62ch]"
           style={{ color: "var(--body)" }}
         >
-          I&apos;m a full-stack developer working across React, TypeScript, Node, and Postgres end to end, from
-          data model to UI. I like systems with real constraints: money that has to reconcile, inventory that has
-          to stay accurate, forms that have to survive a non-technical user. Most of what&apos;s here came out of
-          solving an actual operational problem for a business, not a tutorial.
+          I&apos;m a full-stack developer and I like systems with real constraints: money that has to reconcile,
+          inventory that has to stay accurate, forms that have to survive a non-technical user.
         </p>
       </div>
 
@@ -90,9 +88,6 @@ export function Hero() {
             className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
             style={{ background: "linear-gradient(to bottom, transparent, var(--paper))" }}
           />
-        </div>
-        <div className="mt-2.5 text-caption leading-caption uppercase tracking-caption tabular-nums" style={{ color: "var(--muted)" }}>
-          PO / 2026
         </div>
       </div>
     </section>
