@@ -116,7 +116,7 @@ export const PROJECTS: Project[] = [
     tagline:
       "A mobile-first operations web app built on spec for a Lagos luxury car dealership with a CRM built around WhatsApp, inventory tracking and deal sheets generated automatically; designed, built and pitched entirely on my own initiative. It was never adopted but it was worth the shot.",
     problem:
-      "Most dealerships and the car industry in general use a workflow that lived in WhatsApp threads.",
+      "Most dealerships and the car industry in general use a workflow that lives in WhatsApp threads.",
     whatBroke: [
       "A code audit turned up a silent exchange-rate bug that could put ₦0 or NaN into deal sheet PDFs with no visible error. It had been sitting in production undetected, since nothing was actually crashing.",
       "The offline and installable app layer broke completely after a framework upgrade. Two popular PWA libraries were both incompatible with the new default build system, so the fix meant switching to a different build approach entirely.",
