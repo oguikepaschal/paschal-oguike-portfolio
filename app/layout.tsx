@@ -39,9 +39,8 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Paschal — Full-stack developer",
-  description:
-    "I architect the system. The agents type the code. Full-stack developer working across React, TypeScript, Node, and Postgres.",
+  title: "Paschal",
+  description: "Full-stack developer working across React, TypeScript, Node and Postgres",
 };
 
 // Applies the saved (or system) theme to <html> before hydration, so there's
