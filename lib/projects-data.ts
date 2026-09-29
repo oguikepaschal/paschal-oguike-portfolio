@@ -126,9 +126,9 @@ export const PROJECTS: Project[] = [
     repoHref: "https://github.com/oguikepaschal/freight-platform",
     description: "Three apps, one shared backend, kept in sync.",
     tagline:
-      "A freight-forwarding platform built from scratch, modeled on enterprise players in the space. Split into a public marketing site, a customer portal, and an internal admin app, all sharing one monorepo and one data layer.",
+      "A freight-forwarding platform built from scratch, modeled on enterprise players in the space. Split into a public marketing site, a customer portal and an internal admin app, all sharing one monorepo and one data layer.",
     problem:
-      "Freight software has to serve prospects, shipping customers, and internal ops at once, without the three surfaces drifting into separate codebases.",
+      "Freight software has to serve prospects, shipping customers and internal ops at once, without the three surfaces drifting into separate codebases.",
     whatBroke: [
       "Preview deployments started failing consistently once the database's preview-branch count hit its plan limit. Production was unaffected, but every feature branch broke until old branches were cleaned up manually. Still a recurring maintenance task.",
       "An automated attribution-suppression config looked correct in review but silently failed, because two keys were the wrong type: booleans instead of empty strings. A manual check caught it, which led to a second independent safeguard rather than trusting the config alone.",
@@ -136,7 +136,7 @@ export const PROJECTS: Project[] = [
     ],
     decisions: [
       "Turborepo monorepo with shared UI and type packages, so all three apps stay consistent without copy-pasting components.",
-      "Schema decisions made early and carefully. Freight data like shipments, containers, and customs records is hard to restructure later.",
+      "Schema decisions made early and carefully. Freight data like shipments, containers and customs records is hard to restructure later.",
       "Architecture reviewed before implementation each time, rather than worked out live in the codebase.",
     ],
     techIcons: [
@@ -181,20 +181,22 @@ export const PROJECTS: Project[] = [
     whatBroke: [
       "A code audit turned up a silent exchange-rate bug that could put ₦0 or NaN into deal sheet PDFs with no visible error. It had been sitting in production undetected, since nothing was actually crashing.",
       "The offline and installable app layer broke completely after a framework upgrade. Two popular PWA libraries were both incompatible with the new default build system, so the fix meant switching to a different build approach entirely.",
-      "Car creation wasn't atomic so a failure partway through could leave a partial record in the database. Same root cause as the Sterling wallet bugs. Recognizing the pattern the second time meant fixing it faster.",
       "Deleted or hidden cars were still reachable through a public image URL, meaning inventory that was supposed to be private stayed viewable to anyone with the link.",
+      "Any logged-in staff member could make themselves admin from the browser console. A database policy let users edit every column of their own profile, including their role. Role changes now go through a server route that checks the caller is an admin.",
     ],
     decisions: [
       "Built the CRM around WhatsApp instead of a conventional inbox, matching the channel the sales team already relied on.",
       "Chose a PWA over a native app, since install friction on the team's phones mattered more than native features.",
-      "Deal sheets now pull directly from live inventory, removing a manual step that used to cause errors.",
+      "Audited every route and database policy before calling it finished, and proved each fix locally against production's real rules before shipping.",
     ],
     techIcons: [
+      { label: "Next.js", src: `${ICONS}/nextdotjs`, mono: true },
       { label: "React", src: `${ICONS}/react` },
-      { label: "Node.js", src: `${ICONS}/nodedotjs` },
       { label: "WhatsApp API", src: `${ICONS}/whatsapp` },
       { label: "Tailwind", src: `${ICONS}/tailwindcss` },
       { label: "Supabase", src: `${ICONS}/supabase` },
+      { label: "Zod", src: `${ICONS}/zod` },
+      { label: "Vercel", src: `${ICONS}/vercel`, mono: true },
     ],
     image: {
       src: "/images/projects/polanco-ops-hub.jpeg",
@@ -234,7 +236,7 @@ export const PROJECTS: Project[] = [
     repoHref: "https://github.com/oguikepaschal/stonebridge-builders",
     description: "A CMS that lives in git, not a subscription.",
     tagline:
-      "Marketing site, recruiting pipeline, and content management for a general contracting company operating across Pennsylvania, North Carolina, and Illinois. Content lives in the repo, with no database and no monthly CMS cost.",
+      "Marketing site, recruiting pipeline and content management for a general contracting company operating across Pennsylvania, North Carolina and Illinois. Content lives in the repo, with no database and no monthly CMS cost.",
     problem: "A small contracting company editing a few pages a month doesn't need a headless CMS subscription to do it.",
     whatBroke: [
       "SSL certificate renewal failed, and the certificate settings looked completely correct. The real cause was a nameserver mismatch between the hosting provider and the domain registrar, which meant the certificate authority couldn't verify the domain at all.",

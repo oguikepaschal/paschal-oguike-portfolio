@@ -65,7 +65,7 @@ export function Hero() {
           style={{ color: "var(--body)" }}
         >
           I&apos;m a full-stack developer and I like systems with real constraints: money that has to reconcile,
-          inventory that has to stay accurate, forms that have to survive a non-technical user.
+          inventory that has to stay accurate and forms that have to survive a non-technical user.
         </p>
       </div>
 

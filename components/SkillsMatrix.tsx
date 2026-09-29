@@ -13,14 +13,8 @@ export function SkillsMatrix() {
           Technical skills
         </SectionLabel>
         <SectionHeadline className="lg:col-start-3 lg:col-span-6 lg:self-end">
-          What I reach for, by default.
-        </SectionHeadline>
-        <p
-          className="font-text text-small leading-small tracking-small text-pretty lg:col-start-10 lg:col-span-3 lg:self-end"
-          style={{ color: "var(--muted)" }}
-        >
           The stack, roughly.
-        </p>
+        </SectionHeadline>
       </div>
 
       {/* A typographic index: every category in order, a hairline between
