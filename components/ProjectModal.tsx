@@ -120,7 +120,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div className="flex items-center gap-3.5 text-label leading-label uppercase tracking-label" style={{ color: "var(--muted)" }}>
                 <span style={{ color: "var(--accent)" }}>{project.number}</span>
                 <span>{project.status}</span>
-                <span className="h-px flex-1" style={{ background: "var(--rule)" }} />
               </div>
 
               <h3 className="font-display mt-3.5 mb-5 text-center text-mtitle leading-mtitle font-extrabold uppercase tracking-mtitle">
@@ -134,10 +133,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 {project.tagline}
               </p>
 
-              <div
-                className="flex flex-col gap-[clamp(24px,3vw,40px)] border-t-2 pt-10 pb-10"
-                style={{ borderColor: "var(--rule)" }}
-              >
+              <div className="flex flex-col gap-[clamp(24px,3vw,40px)]">
                 <div>
                   <div className="mb-3 text-center text-label leading-label uppercase tracking-label" style={{ color: "var(--accent)" }}>
                     The problem
@@ -158,7 +154,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
               </div>
 
-              <div className="border-t-2 pt-10" style={{ borderColor: "var(--rule)" }}>
+              <div className="pt-[clamp(24px,3vw,40px)]">
                 <div className="mb-3 text-center text-label leading-label uppercase tracking-label" style={{ color: "var(--accent)" }}>
                   Decisions
                 </div>
@@ -171,7 +167,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
               {project.images && project.images.length > 0 && (
                 <div
-                  className="flex flex-col gap-[clamp(24px,3vw,40px)] border-t-2 pt-10"
+                  className="mt-10 flex flex-col gap-[clamp(24px,3vw,40px)] border-t-2 pt-10"
                   style={{ borderColor: "var(--rule)" }}
                 >
                   {project.images.map((img) => (
@@ -195,7 +191,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               )}
 
               <div
-                className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t-2 pt-5"
+                className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t-2 pt-5"
                 style={{ borderColor: "var(--rule)" }}
               >
                 <div className="flex flex-wrap items-center gap-2">
@@ -203,8 +199,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <span
                       key={icon.label}
                       title={icon.label}
-                      className="flex h-[34px] w-[34px] items-center justify-center border"
-                      style={{ borderColor: "var(--rule)" }}
+                      className="flex h-[34px] w-[34px] items-center justify-center"
                     >
                       <img
                         src={icon.src}
