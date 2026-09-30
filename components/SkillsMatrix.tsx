@@ -17,17 +17,14 @@ export function SkillsMatrix() {
         </SectionHeadline>
       </div>
 
-      {/* A typographic index: every category in order, a hairline between
-          each, tools set inline like words. On desktop the category name
-          hangs in the left columns and its tools flow on the right. */}
+      {/* A typographic index: every category in order, tools set inline
+          like words. On desktop the category name hangs in the left columns
+          and its tools flow on the right. */}
       <div>
-        {SKILL_CATEGORIES.map((category, i) => (
+        {SKILL_CATEGORIES.map((category) => (
           <div
             key={category.title}
-            className={`grid grid-cols-1 gap-x-6 gap-y-3 py-[clamp(20px,2.4vw,32px)] lg:grid-cols-12 lg:items-baseline ${
-              i > 0 ? "border-t" : ""
-            }`}
-            style={{ borderColor: "var(--rule)" }}
+            className="grid grid-cols-1 gap-x-6 gap-y-3 py-[clamp(20px,2.4vw,32px)] lg:grid-cols-12 lg:items-baseline"
           >
             <h3 className="font-category m-0 text-lead leading-[1.2] font-normal italic lg:col-span-3 lg:col-start-1">
               {category.title}

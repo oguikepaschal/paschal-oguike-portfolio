@@ -260,7 +260,7 @@ function ProjectCard({
           >
             {project.number}
           </span>
-          <Badge tone={project.tone} border={project.status !== "Live"}>
+          <Badge tone={project.tone} border={false}>
             {project.status}
           </Badge>
         </div>
@@ -273,8 +273,8 @@ function ProjectCard({
           <div className="flex-1" />
 
           <div
-            className="flex items-center justify-between gap-3 border-t-2 pt-3.5 text-label leading-label uppercase tracking-label"
-            style={{ borderColor: "var(--rule)", color: "var(--accent)" }}
+            className="flex items-center justify-between gap-3 pt-3.5 text-label leading-label uppercase tracking-label"
+            style={{ color: "var(--accent)" }}
           >
             {/* Shares the row rather than adding one: a second line would
                 make a spread card taller than a fanned one, which moves
@@ -306,8 +306,8 @@ function ProjectCard({
               {project.tagline}
             </p>
             <div
-              className="mt-3 border-t-2 pt-3 text-label leading-label uppercase tracking-label"
-              style={{ borderColor: "var(--rule)", color: "var(--accent)" }}
+              className="mt-3 pt-3 text-label leading-label uppercase tracking-label"
+              style={{ color: "var(--accent)" }}
             >
               Read the detail
             </div>
