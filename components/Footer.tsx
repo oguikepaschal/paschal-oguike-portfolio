@@ -1,7 +1,5 @@
 import type { ReactNode } from "react";
 
-const EMAIL = "paschaloguike@gmail.com";
-
 const ICON_PROPS = {
   width: 18,
   height: 18,
@@ -55,46 +53,28 @@ export function Footer() {
     <footer
       id="site-footer"
       data-inverse
-      className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-[clamp(24px,4.5vw,64px)] pt-9 pb-[clamp(28px,4vw,40px)]"
+      className="flex flex-col items-center gap-y-3 px-[clamp(24px,4.5vw,64px)] pt-9 pb-[clamp(28px,4vw,40px)] text-label leading-label uppercase tracking-label sm:flex-row sm:justify-between sm:gap-x-6"
       style={{ background: "var(--paper)" }}
     >
-      <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-label leading-label uppercase tracking-label">
-        <div className="flex items-center gap-1">
-          {SOCIALS.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.label}
-              title={social.label}
-              className="flex h-11 w-11 items-center justify-center transition-colors duration-300 hover:text-ink"
-              style={{ color: "var(--faint)" }}
-            >
-              {social.icon}
-            </a>
-          ))}
-        </div>
-        <a
-          href={`mailto:${EMAIL}`}
-          className="transition-colors duration-300 hover:text-ink"
-          style={{ color: "var(--faint)" }}
-        >
-          Email
-        </a>
-        <a
-          href="https://github.com/oguikepaschal/paschal-oguike-portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-colors duration-300 hover:text-ink"
-          style={{ color: "var(--faint)" }}
-        >
-          Source for this site
-        </a>
-        <a href="#top" className="transition-colors duration-300 hover:text-ink" style={{ color: "var(--faint)" }}>
-          Back to top
-        </a>
+      <div className="flex items-center gap-4">
+        {SOCIALS.map((social) => (
+          <a
+            key={social.label}
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={social.label}
+            title={social.label}
+            className="flex h-11 w-11 items-center justify-center transition-colors duration-300 hover:text-ink"
+            style={{ color: "var(--faint)" }}
+          >
+            {social.icon}
+          </a>
+        ))}
       </div>
+      <a href="#top" className="transition-colors duration-300 hover:text-ink" style={{ color: "var(--faint)" }}>
+        Back to top
+      </a>
     </footer>
   );
 }
