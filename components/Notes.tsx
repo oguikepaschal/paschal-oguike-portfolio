@@ -44,8 +44,7 @@ export function Notes() {
         {NOTES.map((note) => (
           <li
             key={note.title}
-            className="grid grid-cols-1 items-baseline gap-x-6 gap-y-2 border-t-2 py-6 lg:grid-cols-12"
-            style={{ borderColor: "var(--rule)" }}
+            className="grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-6 lg:grid-cols-12"
           >
             <span className="text-caption leading-caption tracking-caption lg:col-start-1 lg:col-span-1" style={{ color: "var(--accent)" }}>
               —

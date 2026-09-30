@@ -94,7 +94,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 8 }}
             transition={{ duration: reducedMotion ? 0.2 : 0.32, ease: cubicBezier(0.2, 0.9, 0.24, 1) }}
             className="relative w-full max-w-[920px]"
-            style={{ background: "var(--card)", border: "1px solid var(--rule)", boxShadow: "0 40px 90px -40px rgba(23,19,16,0.6)" }}
+            style={{ background: "var(--card)", boxShadow: "0 40px 90px -40px rgba(23,19,16,0.6)" }}
           >
             {/* Zero-height sticky rail at the top of the card: the button
                 still hangs half past the card's corner at rest, but once the
