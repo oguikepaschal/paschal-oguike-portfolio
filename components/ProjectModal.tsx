@@ -158,6 +158,18 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <div className="mb-3 text-center text-label leading-label uppercase tracking-label" style={{ color: "var(--accent)" }}>
                   Decisions
                 </div>
+                {project.ci && (
+                  <a
+                    href={project.ci.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View CI runs on GitHub"
+                    className="mb-3 flex h-5 justify-center"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={project.ci.badgeSrc} alt="CI status" height={20} />
+                  </a>
+                )}
                 <ul className="font-text m-0 flex list-none flex-col gap-2.5 p-0 text-small leading-small tracking-small" style={{ color: "var(--body)" }}>
                   {project.decisions.map((item) => (
                     <li key={item}>{item}</li>
