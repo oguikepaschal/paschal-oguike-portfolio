@@ -55,6 +55,9 @@ export interface Project {
      * are sample data. */
     caption?: string;
   }[];
+  /** Live GitHub Actions status badge shown above the decisions list, linked
+   * to the workflow's runs page. Omitted projects render without it. */
+  ci?: { badgeSrc: string; href: string };
 }
 
 const ICONS = "https://cdn.simpleicons.org";
@@ -138,7 +141,12 @@ export const PROJECTS: Project[] = [
       "Turborepo monorepo with shared UI and type packages, so all three apps stay consistent without copy-pasting components.",
       "Schema decisions made early and carefully. Freight data like shipments, containers and customs records is hard to restructure later.",
       "Architecture reviewed before implementation each time, rather than worked out live in the codebase.",
+      "Database tests run in CI against a temporary Neon branch created for each run and deleted afterwards, so every migration is tested before it reaches production and test data never touches the live database.",
     ],
+    ci: {
+      badgeSrc: "https://github.com/oguikepaschal/freight-platform/actions/workflows/ci.yml/badge.svg?branch=main",
+      href: "https://github.com/oguikepaschal/freight-platform/actions/workflows/ci.yml",
+    },
     techIcons: [
       { label: "Next.js", src: `${ICONS}/nextdotjs`, mono: true },
       { label: "TypeScript", src: `${ICONS}/typescript` },
